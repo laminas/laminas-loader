@@ -1,19 +1,22 @@
 {
-    "name": "zendframework/zend-loader",
+    "name": "laminas/laminas-loader",
     "description": " ",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "loader"
     ],
-    "homepage": "https://github.com/zendframework/zend-loader",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Loader\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-loader/",
+        "issues": "https://github.com/laminas/laminas-loader/issues",
+        "source": "https://github.com/laminas/laminas-loader",
+        "rss": "https://github.com/laminas/laminas-loader/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.3"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -21,17 +24,29 @@
             "dev-develop": "2.2-dev"
         }
     },
-    "suggest": {
-        "zendframework/zend-stdlib": "Zend\\Stdlib component"
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Loader\\": "test/"
-        }
+    "require": {
+        "php": ">=5.3.3",
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "require-dev": {
         "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-stdlib": "Laminas\\Stdlib component"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Loader\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\Loader\\": "test/"
+        }
+    },
+    "replace": {
+        "zendframework/zend-loader": "self.version"
     }
 }

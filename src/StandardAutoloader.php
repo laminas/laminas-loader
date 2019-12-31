@@ -1,13 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 // Grab SplAutoloader interface
 require_once __DIR__ . '/SplAutoloader.php';
@@ -26,10 +25,12 @@ class StandardAutoloader implements SplAutoloader
     const LOAD_NS          = 'namespaces';
     const LOAD_PREFIX      = 'prefixes';
     const ACT_AS_FALLBACK  = 'fallback_autoloader';
-    const AUTOREGISTER_ZF  = 'autoregister_zf';
+    /** @deprecated Use AUTOREGISTER_LAMINAS instead */
+    const AUTOREGISTER_ZF  = 'autoregister_laminas';
+    const AUTOREGISTER_LAMINAS  = 'autoregister_laminas';
 
     /**
-     * @var array Namespace/directory pairs to search; ZF library added by default
+     * @var array Namespace/directory pairs to search; Laminas library added by default
      */
     protected $namespaces = array();
 
@@ -63,7 +64,7 @@ class StandardAutoloader implements SplAutoloader
      * <code>
      * array(
      *     'namespaces' => array(
-     *         'Zend'     => '/path/to/Zend/library',
+     *         'Laminas'     => '/path/to/Laminas/library',
      *         'Doctrine' => '/path/to/Doctrine/library',
      *     ),
      *     'prefixes' => array(
@@ -86,10 +87,9 @@ class StandardAutoloader implements SplAutoloader
 
         foreach ($options as $type => $pairs) {
             switch ($type) {
-                case self::AUTOREGISTER_ZF:
+                case self::AUTOREGISTER_LAMINAS:
                     if ($pairs) {
-                        $this->registerNamespace('Zend', dirname(__DIR__));
-                        $this->registerNamespace('ZendXml', dirname(dirname((__DIR__))) . '/ZendXml');
+                        $this->registerNamespace('Laminas', dirname(__DIR__));
                     }
                     break;
                 case self::LOAD_NS:
