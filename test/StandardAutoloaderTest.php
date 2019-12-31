@@ -1,21 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Loader
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
-use Zend\Loader\StandardAutoloader;
-use Zend\Loader\Exception\InvalidArgumentException;
+use Laminas\Loader\Exception\InvalidArgumentException;
+use Laminas\Loader\StandardAutoloader;
 use ReflectionClass;
 
 /**
- * @category   Zend
+ * @category   Laminas
  * @package    Loader
  * @subpackage UnitTests
  * @group      Loader
@@ -88,10 +86,10 @@ class StandardAutoloaderTest extends \PHPUnit_Framework_TestCase
     {
         $options = array(
             'namespaces' => array(
-                'Zend\\'   => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+                'Laminas\\'   => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ),
             'prefixes'   => array(
-                'Zend_'  => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+                'Laminas_'  => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ),
             'fallback_autoloader' => true,
         );
@@ -105,10 +103,10 @@ class StandardAutoloaderTest extends \PHPUnit_Framework_TestCase
     public function testPassingTraversableOptionsPopulatesProperties()
     {
         $namespaces = new \ArrayObject(array(
-            'Zend\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'Laminas\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ));
         $prefixes = new \ArrayObject(array(
-            'Zend_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'Laminas_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ));
         $options = new \ArrayObject(array(
             'namespaces' => $namespaces,
@@ -125,17 +123,17 @@ class StandardAutoloaderTest extends \PHPUnit_Framework_TestCase
     public function testAutoloadsNamespacedClasses()
     {
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('ZendTest\UnusualNamespace', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest\UnusualNamespace\NamespacedClass');
-        $this->assertTrue(class_exists('ZendTest\UnusualNamespace\NamespacedClass', false));
+        $loader->registerNamespace('LaminasTest\UnusualNamespace', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest\UnusualNamespace\NamespacedClass');
+        $this->assertTrue(class_exists('LaminasTest\UnusualNamespace\NamespacedClass', false));
     }
 
     public function testAutoloadsVendorPrefixedClasses()
     {
         $loader = new StandardAutoloader();
-        $loader->registerPrefix('ZendTest_UnusualPrefix', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest_UnusualPrefix_PrefixedClass');
-        $this->assertTrue(class_exists('ZendTest_UnusualPrefix_PrefixedClass', false));
+        $loader->registerPrefix('LaminasTest_UnusualPrefix', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest_UnusualPrefix_PrefixedClass');
+        $this->assertTrue(class_exists('LaminasTest_UnusualPrefix_PrefixedClass', false));
     }
 
     public function testCanActAsFallbackAutoloader()
@@ -173,24 +171,24 @@ class StandardAutoloaderTest extends \PHPUnit_Framework_TestCase
     public function testAutoloadsNamespacedClassesWithUnderscores()
     {
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('ZendTest\UnusualNamespace', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest\UnusualNamespace\Name_Space\Namespaced_Class');
-        $this->assertTrue(class_exists('ZendTest\UnusualNamespace\Name_Space\Namespaced_Class', false));
+        $loader->registerNamespace('LaminasTest\UnusualNamespace', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest\UnusualNamespace\Name_Space\Namespaced_Class');
+        $this->assertTrue(class_exists('LaminasTest\UnusualNamespace\Name_Space\Namespaced_Class', false));
     }
 
-    public function testZendFrameworkNamespaceIsNotLoadedByDefault()
+    public function testLaminasNamespaceIsNotLoadedByDefault()
     {
         $loader = new StandardAutoloader();
         $expected = array();
         $this->assertAttributeEquals($expected, 'namespaces', $loader);
     }
 
-    public function testCanTellAutoloaderToRegisterZendNamespaceAtInstantiation()
+    public function testCanTellAutoloaderToRegisterLaminasNamespaceAtInstantiation()
     {
-        $loader = new StandardAutoloader(array('autoregister_zf' => true));
+        $loader = new StandardAutoloader(array('autoregister_laminas' => true));
         $r      = new ReflectionClass($loader);
         $file   = $r->getFileName();
-        $expected = array('Zend\\' => dirname(dirname($file)) . DIRECTORY_SEPARATOR);
+        $expected = array('Laminas\\' => dirname(dirname($file)) . DIRECTORY_SEPARATOR);
         $this->assertAttributeEquals($expected, 'namespaces', $loader);
     }
 
