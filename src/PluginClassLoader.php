@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Loader
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 use ArrayIterator;
 use IteratorAggregate;
@@ -17,8 +15,8 @@ use Traversable;
 /**
  * Plugin class locator interface
  *
- * @category   Zend
- * @package    Zend_Loader
+ * @category   Laminas
+ * @package    Laminas_Loader
  */
 class PluginClassLoader implements PluginClassLocator
 {
