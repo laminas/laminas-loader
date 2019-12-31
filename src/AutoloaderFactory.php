@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 use ReflectionClass;
 use Traversable;
 
-if (class_exists('Zend\Loader\AutoloaderFactory')) {
+if (class_exists('Laminas\Loader\AutoloaderFactory')) {
     return;
 }
 
 abstract class AutoloaderFactory
 {
-    const STANDARD_AUTOLOADER = 'Zend\Loader\StandardAutoloader';
+    const STANDARD_AUTOLOADER = 'Laminas\Loader\StandardAutoloader';
 
     /**
      * @var array All autoloaders registered using the factory
@@ -48,10 +47,10 @@ abstract class AutoloaderFactory
      * {@link getRegisteredAutoloaders()}.
      *
      * Note that the class names must be resolvable on the include_path or via
-     * the Zend library, using PSR-0 rules (unless the class has already been
+     * the Laminas library, using PSR-0 rules (unless the class has already been
      * loaded).
      *
-     * @param  array|Traversable $options (optional) options to use. Defaults to Zend\Loader\StandardAutoloader
+     * @param  array|Traversable $options (optional) options to use. Defaults to Laminas\Loader\StandardAutoloader
      * @return void
      * @throws Exception\InvalidArgumentException for invalid options
      * @throws Exception\InvalidArgumentException for unloadable autoloader classes
@@ -87,10 +86,10 @@ abstract class AutoloaderFactory
                     );
                 }
 
-                if (!static::isSubclassOf($class, 'Zend\Loader\SplAutoloader')) {
+                if (!static::isSubclassOf($class, 'Laminas\Loader\SplAutoloader')) {
                     require_once 'Exception/InvalidArgumentException.php';
                     throw new Exception\InvalidArgumentException(
-                        sprintf('Autoloader class %s must implement Zend\\Loader\\SplAutoloader', $class)
+                        sprintf('Autoloader class %s must implement Laminas\\Loader\\SplAutoloader', $class)
                     );
                 }
 
@@ -172,7 +171,7 @@ abstract class AutoloaderFactory
      *
      * Used to attempt to resolve autoloader classes, using the
      * StandardAutoloader. The instance is marked as a fallback autoloader, to
-     * allow resolving autoloaders not under the "Zend" namespace.
+     * allow resolving autoloaders not under the "Laminas" namespace.
      *
      * @return SplAutoloader
      */
