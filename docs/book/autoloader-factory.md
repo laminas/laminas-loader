@@ -1,7 +1,7 @@
 # The AutoloaderFactory
 
-zend-loader provides multiple autoloader strategies.
-`Zend\Loader\AutoloaderFactory` allows you to define configuration for each
+laminas-loader provides multiple autoloader strategies.
+`Laminas\Loader\AutoloaderFactory` allows you to define configuration for each
 strategy you wish to use and register them at once. As an example, you may have
 a class map for your most used classes, but want to use a PSR-0 style autoloader
 for 3rd party libraries. The factory uses configuration, allowing you to cache
@@ -13,11 +13,11 @@ The `AutoloaderFactory` expects an array of configuration.
 
 ```php
 $config = [
-    'Zend\Loader\ClassMapAutoloader' => [
+    'Laminas\Loader\ClassMapAutoloader' => [
         'application' => APPLICATION_PATH . '/.classmap.php',
-        'zf'          => APPLICATION_PATH . '/../library/Zend/.classmap.php',
+        'laminas'          => APPLICATION_PATH . '/../library/Laminas/.classmap.php',
     ],
-    'Zend\Loader\StandardAutoloader' => [
+    'Laminas\Loader\StandardAutoloader' => [
         'namespaces' => [
             'Phly\Mustache' => APPLICATION_PATH . '/../library/Phly/Mustache',
             'Doctrine'      => APPLICATION_PATH . '/../library/Doctrine',
@@ -31,7 +31,7 @@ Once you have your configuration in a PHP array, pass it to the
 
 ```php
 // This example assumes that the AutoloaderFactory is itself autoloadable!
-use Zend\Loader\AutoloaderFactory;
+use Laminas\Loader\AutoloaderFactory;
 
 AutoloaderFactory::factory($config);
 ```

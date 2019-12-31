@@ -1,36 +1,19 @@
 {
-    "name": "zendframework/zend-loader",
+    "name": "laminas/laminas-loader",
     "description": "Autoloading and plugin loading strategies",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf",
-        "zendframework",
+        "laminas",
         "loader"
     ],
+    "homepage": "https://laminas.dev",
     "support": {
-        "docs": "https://docs.zendframework.com/zend-loader/",
-        "issues": "https://github.com/zendframework/zend-loader/issues",
-        "source": "https://github.com/zendframework/zend-loader",
-        "rss": "https://github.com/zendframework/zend-loader/releases.atom",
-        "chat": "https://zendframework-slack.herokuapp.com",
-        "forum": "https://discourse.zendframework.com/c/questions/components"
-    },
-    "require": {
-        "php": "^5.6 || ^7.0"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4",
-        "zendframework/zend-coding-standard": "~1.0.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Zend\\Loader\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "ZendTest\\Loader\\": "test/"
-        }
+        "docs": "https://docs.laminas.dev/laminas-loader/",
+        "issues": "https://github.com/laminas/laminas-loader/issues",
+        "source": "https://github.com/laminas/laminas-loader",
+        "rss": "https://github.com/laminas/laminas-loader/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
     "config": {
         "sort-packages": true
@@ -39,6 +22,24 @@
         "branch-alias": {
             "dev-master": "2.6.x-dev",
             "dev-develop": "2.7.x-dev"
+        }
+    },
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "laminas/laminas-coding-standard": "~1.0.0",
+        "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Loader\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "LaminasTest\\Loader\\": "test/"
         }
     },
     "scripts": {
@@ -50,5 +51,8 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+    },
+    "replace": {
+        "zendframework/zend-loader": "self.version"
     }
 }

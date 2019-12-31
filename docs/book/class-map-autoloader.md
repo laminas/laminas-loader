@@ -17,7 +17,7 @@ location of the map.
 
 ```php
 // This example assumes the ClassMapAutoloader is autoloadable.
-use Zend\Loader\ClassMapAutoloader;
+use Laminas\Loader\ClassMapAutoloader;
 
 $loader = new ClassMapAutoloader();
 
@@ -142,7 +142,7 @@ the `ClassMapAutoloader`, to its `setOptions()` method, or to
 `registerAutoloadMaps()`.
 
 ```php
-use Zend\Loader\ClassMapAutoloader;
+use Laminas\Loader\ClassMapAutoloader;
 
 /* The following are all equivalent */
 

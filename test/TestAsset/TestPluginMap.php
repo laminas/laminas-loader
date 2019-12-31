@@ -1,11 +1,12 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-loader for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-loader/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader\TestAsset;
+namespace LaminasTest\Loader\TestAsset;
 
 /**
  * @group      Loader
@@ -19,8 +20,8 @@ class TestPluginMap implements \IteratorAggregate
      */
     public $map = array(
         'map'    => __CLASS__,
-        'test'   => 'ZendTest\Loader\PluginClassLoaderTest',
-        'loader' => 'Zend\Loader\PluginClassLoader',
+        'test'   => 'LaminasTest\Loader\PluginClassLoaderTest',
+        'loader' => 'Laminas\Loader\PluginClassLoader',
     );
 
     /**

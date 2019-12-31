@@ -1,9 +1,9 @@
 # The SplAutoloader Interface
 
 While any valid PHP callback may be registered with `spl_autoload_register()`,
-the autoloaders zend-loader provides offer more flexibility by being stateful
+the autoloaders laminas-loader provides offer more flexibility by being stateful
 and allowing configuration. To provide a common interface for such autoloaders,
-zend-loader provides the `SplAutoloader` interface.
+laminas-loader provides the `SplAutoloader` interface.
 
 Objects implementing this interface provide a standard mechanism for
 configuration, a method that may be invoked to attempt to load a class, and a
@@ -22,7 +22,7 @@ namespace Custom;
 
 use InvalidArgumentException;
 use Traversable;
-use Zend\Loader\SplAutoloader;
+use Laminas\Loader\SplAutoloader;
 
 class ModifiedIncludePathAutoloader implements SplAutoloader
 {

@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-loader for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-loader/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
+use Laminas\Loader\ClassMapAutoloader;
+use Laminas\Loader\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Zend\Loader\ClassMapAutoloader;
-use Zend\Loader\Exception\InvalidArgumentException;
 
 /**
  * @group      Loader
@@ -67,7 +68,7 @@ class ClassMapAutoloaderTest extends TestCase
     {
         $map = [
             // @codingStandardsIgnoreStart
-            'Zend\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Zend/Loader/Exception/ExceptionInterface.php',
+            'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
         ];
         $this->loader->registerAutoloadMap($map);
@@ -79,7 +80,7 @@ class ClassMapAutoloaderTest extends TestCase
     {
         $map = [
             // @codingStandardsIgnoreStart
-            'Zend\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Zend/Loader/Exception/ExceptionInterface.php',
+            'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
         ];
         $loader = new ClassMapAutoloader([$map]);
@@ -105,9 +106,9 @@ class ClassMapAutoloaderTest extends TestCase
     {
         $map = [
             // @codingStandardsIgnoreStart
-            'Zend\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Zend/Loader/Exception/ExceptionInterface.php',
+            'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
-            'ZendTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
+            'LaminasTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
         ];
         $this->loader->registerAutoloadMap($map);
         $this->loader->registerAutoloadMap(__DIR__ . '/_files/goodmap.php');
@@ -116,8 +117,8 @@ class ClassMapAutoloaderTest extends TestCase
         $this->assertInternalType('array', $test);
         $this->assertCount(3, $test);
         $this->assertNotEquals(
-            $map['ZendTest\Loader\StandardAutoloaderTest'],
-            $test['ZendTest\Loader\StandardAutoloaderTest']
+            $map['LaminasTest\Loader\StandardAutoloaderTest'],
+            $test['LaminasTest\Loader\StandardAutoloaderTest']
         );
     }
 
@@ -125,9 +126,9 @@ class ClassMapAutoloaderTest extends TestCase
     {
         $map = [
             // @codingStandardsIgnoreStart
-            'Zend\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Zend/Loader/Exception/ExceptionInterface.php',
+            'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
-            'ZendTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
+            'LaminasTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
         ];
         $maps = [$map, __DIR__ . '/_files/goodmap.php'];
         $this->loader->registerAutoloadMaps($maps);
@@ -151,19 +152,19 @@ class ClassMapAutoloaderTest extends TestCase
 
     public function testAutoloadLoadsClasses()
     {
-        $map = ['ZendTest\UnusualNamespace\ClassMappedClass' => __DIR__ . '/TestAsset/ClassMappedClass.php'];
+        $map = ['LaminasTest\UnusualNamespace\ClassMappedClass' => __DIR__ . '/TestAsset/ClassMappedClass.php'];
         $this->loader->registerAutoloadMap($map);
-        $loaded = $this->loader->autoload('ZendTest\UnusualNamespace\ClassMappedClass');
-        $this->assertSame('ZendTest\UnusualNamespace\ClassMappedClass', $loaded);
-        $this->assertTrue(class_exists('ZendTest\UnusualNamespace\ClassMappedClass', false));
+        $loaded = $this->loader->autoload('LaminasTest\UnusualNamespace\ClassMappedClass');
+        $this->assertSame('LaminasTest\UnusualNamespace\ClassMappedClass', $loaded);
+        $this->assertTrue(class_exists('LaminasTest\UnusualNamespace\ClassMappedClass', false));
     }
 
     public function testIgnoresClassesNotInItsMap()
     {
-        $map = ['ZendTest\UnusualNamespace\ClassMappedClass' => __DIR__ . '/TestAsset/ClassMappedClass.php'];
+        $map = ['LaminasTest\UnusualNamespace\ClassMappedClass' => __DIR__ . '/TestAsset/ClassMappedClass.php'];
         $this->loader->registerAutoloadMap($map);
-        $this->assertFalse($this->loader->autoload('ZendTest\UnusualNamespace\UnMappedClass'));
-        $this->assertFalse(class_exists('ZendTest\UnusualNamespace\UnMappedClass', false));
+        $this->assertFalse($this->loader->autoload('LaminasTest\UnusualNamespace\UnMappedClass'));
+        $this->assertFalse(class_exists('LaminasTest\UnusualNamespace\UnMappedClass', false));
     }
 
     public function testRegisterRegistersCallbackWithSplAutoload()

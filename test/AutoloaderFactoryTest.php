@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-loader for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-loader/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
+use Laminas\Loader\AutoloaderFactory;
+use Laminas\Loader\Exception\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Zend\Loader\AutoloaderFactory;
-use Zend\Loader\Exception\InvalidArgumentException;
 
 /**
  * @group      Loader
@@ -53,11 +54,11 @@ class AutoloaderFactoryTest extends TestCase
     public function testRegisteringValidMapFilePopulatesAutoloader()
     {
         AutoloaderFactory::factory([
-            'Zend\Loader\ClassMapAutoloader' => [
+            'Laminas\Loader\ClassMapAutoloader' => [
                 __DIR__ . '/_files/goodmap.php',
             ],
         ]);
-        $loader = AutoloaderFactory::getRegisteredAutoloader('Zend\Loader\ClassMapAutoloader');
+        $loader = AutoloaderFactory::getRegisteredAutoloader('Laminas\Loader\ClassMapAutoloader');
         $map = $loader->getAutoloadMap();
         $this->assertInternalType('array', $map);
         $this->assertCount(2, $map);
@@ -79,7 +80,7 @@ class AutoloaderFactoryTest extends TestCase
     public function testFactoryDoesNotRegisterDuplicateAutoloaders()
     {
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     'TestNamespace' => __DIR__ . '/TestAsset/TestNamespace',
                 ],
@@ -87,21 +88,21 @@ class AutoloaderFactoryTest extends TestCase
         ]);
         $this->assertCount(1, AutoloaderFactory::getRegisteredAutoloaders());
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
-                    'ZendTest\Loader\TestAsset\TestPlugins' => __DIR__ . '/TestAsset/TestPlugins',
+                    'LaminasTest\Loader\TestAsset\TestPlugins' => __DIR__ . '/TestAsset/TestPlugins',
                 ],
             ],
         ]);
         $this->assertCount(1, AutoloaderFactory::getRegisteredAutoloaders());
         $this->assertTrue(class_exists('TestNamespace\NoDuplicateAutoloadersCase'));
-        $this->assertTrue(class_exists('ZendTest\Loader\TestAsset\TestPlugins\Foo'));
+        $this->assertTrue(class_exists('LaminasTest\Loader\TestAsset\TestPlugins\Foo'));
     }
 
     public function testCanUnregisterAutoloaders()
     {
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     'TestNamespace' => __DIR__ . '/TestAsset/TestNamespace',
                 ],
@@ -114,34 +115,34 @@ class AutoloaderFactoryTest extends TestCase
     public function testCanUnregisterAutoloadersByClassName()
     {
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     'TestNamespace' => __DIR__ . '/TestAsset/TestNamespace',
                 ],
             ],
         ]);
-        AutoloaderFactory::unregisterAutoloader('Zend\Loader\StandardAutoloader');
+        AutoloaderFactory::unregisterAutoloader('Laminas\Loader\StandardAutoloader');
         $this->assertCount(0, AutoloaderFactory::getRegisteredAutoloaders());
     }
 
     public function testCanGetValidRegisteredAutoloader()
     {
         AutoloaderFactory::factory([
-            'Zend\Loader\StandardAutoloader' => [
+            'Laminas\Loader\StandardAutoloader' => [
                 'namespaces' => [
                     'TestNamespace' => __DIR__ . '/TestAsset/TestNamespace',
                 ],
             ],
         ]);
-        $autoloader = AutoloaderFactory::getRegisteredAutoloader('Zend\Loader\StandardAutoloader');
-        $this->assertInstanceOf('Zend\Loader\StandardAutoloader', $autoloader);
+        $autoloader = AutoloaderFactory::getRegisteredAutoloader('Laminas\Loader\StandardAutoloader');
+        $this->assertInstanceOf('Laminas\Loader\StandardAutoloader', $autoloader);
     }
 
     public function testDefaultAutoloader()
     {
         AutoloaderFactory::factory();
-        $autoloader = AutoloaderFactory::getRegisteredAutoloader('Zend\Loader\StandardAutoloader');
-        $this->assertInstanceOf('Zend\Loader\StandardAutoloader', $autoloader);
+        $autoloader = AutoloaderFactory::getRegisteredAutoloader('Laminas\Loader\StandardAutoloader');
+        $this->assertInstanceOf('Laminas\Loader\StandardAutoloader', $autoloader);
         $this->assertCount(1, AutoloaderFactory::getRegisteredAutoloaders());
     }
 
@@ -165,7 +166,7 @@ class AutoloaderFactoryTest extends TestCase
 
     public function testCannotBeInstantiatedViaConstructor()
     {
-        $reflection = new ReflectionClass('Zend\Loader\AutoloaderFactory');
+        $reflection = new ReflectionClass('Laminas\Loader\AutoloaderFactory');
         $constructor = $reflection->getConstructor();
         $this->assertNull($constructor);
     }
@@ -176,7 +177,7 @@ class AutoloaderFactoryTest extends TestCase
         $loaders = AutoloaderFactory::getRegisteredAutoloaders();
         $this->assertCount(1, $loaders);
         $loader = array_shift($loaders);
-        $this->assertInstanceOf('Zend\Loader\StandardAutoloader', $loader);
+        $this->assertInstanceOf('Laminas\Loader\StandardAutoloader', $loader);
 
         $test  = [$loader, 'autoload'];
         $found = false;

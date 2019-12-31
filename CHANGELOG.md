@@ -28,7 +28,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#18](https://github.com/zendframework/zend-loader/pull/18) adds support for PHP 7.3.
+- [zendframework/zend-loader#18](https://github.com/zendframework/zend-loader/pull/18) adds support for PHP 7.3.
 
 ### Changed
 
@@ -50,9 +50,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#16](https://github.com/zendframework/zend-loader/pull/16) adds support for PHP 7.1 and 7.2.
+- [zendframework/zend-loader#16](https://github.com/zendframework/zend-loader/pull/16) adds support for PHP 7.1 and 7.2.
 
-- [#8](https://github.com/zendframework/zend-loader/pull/8) adds documentation at https://docs.zendframework.com/zend-loader/
+- [zendframework/zend-loader#8](https://github.com/zendframework/zend-loader/pull/8) adds documentation at https://docs.laminas.dev/laminas-loader/
 
 ### Changed
 
@@ -64,9 +64,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#16](https://github.com/zendframework/zend-loader/pull/16) removes support for PHP 5.5.
+- [zendframework/zend-loader#16](https://github.com/zendframework/zend-loader/pull/16) removes support for PHP 5.5.
 
-- [#16](https://github.com/zendframework/zend-loader/pull/16) removes support for HHVM.
+- [zendframework/zend-loader#16](https://github.com/zendframework/zend-loader/pull/16) removes support for HHVM.
 
 ### Fixed
 

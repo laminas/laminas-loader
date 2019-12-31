@@ -1,9 +1,9 @@
-# zend-loader
+# laminas-loader
 
-[![Build Status](https://secure.travis-ci.org/zendframework/zend-loader.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-loader)
-[![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-loader/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-loader?branch=master)
+[![Build Status](https://travis-ci.org/laminas/laminas-loader.svg?branch=master)](https://travis-ci.org/laminas/laminas-loader)
+[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-loader/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-loader?branch=master)
 
-zend-loader provides different strategies for autoloading PHP classes.
+laminas-loader provides different strategies for autoloading PHP classes.
 
-- File issues at https://github.com/zendframework/zend-loader/issues
-- Documentation is at https://docs.zendframework.com/zend-loader/
+- File issues at https://github.com/laminas/laminas-loader/issues
+- Documentation is at https://docs.laminas.dev/laminas-loader/
