@@ -1,37 +1,35 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Loader
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
-use Zend\Loader\Autoloader;
+use Laminas\Loader\Autoloader;
 
 require_once "PHPUnit/Framework/Error/Notice.php";
 require_once "PHPUnit/Framework/TestFailure.php";
 
 /**
- * @category   Zend
- * @package    Zend_Loader
+ * @category   Laminas
+ * @package    Laminas_Loader
  * @subpackage UnitTests
- * @group      Zend_Loader
+ * @group      Laminas_Loader
  */
 class AutoloaderMultiVersionTest extends \PHPUnit_Framework_TestCase
 {
     protected function isEnabled()
     {
-        return (bool)constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_ENABLED');
+        return (bool)constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_ENABLED');
     }
 
     public function setUp()
     {
         if (!$this->isEnabled()) {
-            $this->markTestSkipped('Option TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_ENABLED is not enabled');
+            $this->markTestSkipped('Option TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_ENABLED is not enabled');
         }
 
         // Store original autoloaders
@@ -45,11 +43,11 @@ class AutoloaderMultiVersionTest extends \PHPUnit_Framework_TestCase
         $this->includePath = get_include_path();
 
         Autoloader::resetInstance();
-        $this->path        = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_PATH');
-        $this->latest      = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_LATEST');
-        $this->latestMajor = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_LATEST_MAJOR');
-        $this->latestMinor = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_LATEST_MINOR');
-        $this->specific    = constant('TESTS_ZEND_LOADER_AUTOLOADER_MULTIVERSION_SPECIFIC');
+        $this->path        = constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_PATH');
+        $this->latest      = constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_LATEST');
+        $this->latestMajor = constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_LATEST_MAJOR');
+        $this->latestMinor = constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_LATEST_MINOR');
+        $this->specific    = constant('TESTS_LAMINAS_LOADER_AUTOLOADER_MULTIVERSION_SPECIFIC');
         $this->autoloader  = Autoloader::getInstance();
     }
 
@@ -76,115 +74,115 @@ class AutoloaderMultiVersionTest extends \PHPUnit_Framework_TestCase
         Autoloader::getInstance();
     }
 
-    public function testZfPathIsNullByDefault()
+    public function testLaminasPathIsNullByDefault()
     {
-        $this->assertNull($this->autoloader->getZfPath());
+        $this->assertNull($this->autoloader->getLaminasPath());
     }
 
     /**
-     * @expectedException Zend\Loader\Exception\ExceptionInterface
+     * @expectedException Laminas\Loader\Exception\ExceptionInterface
      */
-    public function testSettingZfPathFailsOnInvalidVersionString()
+    public function testSettingLaminasPathFailsOnInvalidVersionString()
     {
-        $this->autoloader->setZfPath($this->path, 'foo.bar.baz.bat');
+        $this->autoloader->setLaminasPath($this->path, 'foo.bar.baz.bat');
     }
 
     /**
-     * @expectedException Zend\Loader\Exception\ExceptionInterface
+     * @expectedException Laminas\Loader\Exception\ExceptionInterface
      */
-    public function testSettingZfPathFailsWhenBasePathDoesNotExist()
+    public function testSettingLaminasPathFailsWhenBasePathDoesNotExist()
     {
-        $this->autoloader->setZfPath('foo.bar.baz.bat', 'latest');
+        $this->autoloader->setLaminasPath('foo.bar.baz.bat', 'latest');
     }
 
     /**
-     * @expectedException Zend\Loader\Exception\ExceptionInterface
+     * @expectedException Laminas\Loader\Exception\ExceptionInterface
      */
-    public function testSettingZfVersionFailsWhenNoValidInstallsDiscovered()
+    public function testSettingLaminasVersionFailsWhenNoValidInstallsDiscovered()
     {
-        $this->autoloader->setZfPath(__DIR__, 'latest');
+        $this->autoloader->setLaminasPath(__DIR__, 'latest');
     }
 
     public function testAutoloadLatestUsesLatestVersion()
     {
-        $this->autoloader->setZfPath($this->path, 'latest');
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, 'latest');
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertContains($this->latest, $actual);
     }
 
     public function testAutoloadLatestIncludesLibraryInPath()
     {
-        $this->autoloader->setZfPath($this->path, 'latest');
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, 'latest');
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertRegexp('#' . preg_quote($this->latest) . '[^/\\\]*/library#', $actual);
     }
 
     public function testAutoloadLatestAddsPathToIncludePath()
     {
-        $this->autoloader->setZfPath($this->path, 'latest');
+        $this->autoloader->setLaminasPath($this->path, 'latest');
         $incPath = get_include_path();
         $this->assertRegexp('#' . preg_quote($this->latest) . '[^/\\\]*/library#', $incPath);
     }
 
     public function testAutoloadMajorRevisionShouldUseLatestFromMajorRevision()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertContains($this->latestMajor, $actual);
     }
 
     public function testAutoloadMajorRevisionIncludesLibraryInPath()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertRegexp('#' . preg_quote($this->latestMajor) . '[^/\\\]*/library#', $actual);
     }
 
     public function testAutoloadMajorRevisionAddsPathToIncludePath()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMajor, 'major'));
         $incPath = get_include_path();
         $this->assertRegexp('#' . preg_quote($this->latestMajor) . '[^/\\\]*/library#', $incPath);
     }
 
     public function testAutoloadMinorRevisionShouldUseLatestFromMinorRevision()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertContains($this->latestMinor, $actual);
     }
 
     public function testAutoloadMinorRevisionIncludesLibraryInPath()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertRegexp('#' . preg_quote($this->latestMinor) . '[^/\\\]*/library#', $actual);
     }
 
     public function testAutoloadMinorRevisionAddsPathToIncludePath()
     {
-        $this->autoloader->setZfPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
+        $this->autoloader->setLaminasPath($this->path, $this->_getVersion($this->latestMinor, 'minor'));
         $incPath = get_include_path();
         $this->assertRegexp('#' . preg_quote($this->latestMinor) . '[^/\\\]*/library#', $incPath);
     }
 
     public function testAutoloadSpecificRevisionShouldUseThatVersion()
     {
-        $this->autoloader->setZfPath($this->path, $this->specific);
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->specific);
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertContains($this->specific, $actual);
     }
 
     public function testAutoloadSpecificRevisionIncludesLibraryInPath()
     {
-        $this->autoloader->setZfPath($this->path, $this->specific);
-        $actual = $this->autoloader->getZfPath();
+        $this->autoloader->setLaminasPath($this->path, $this->specific);
+        $actual = $this->autoloader->getLaminasPath();
         $this->assertRegexp('#' . preg_quote($this->specific) . '[^/\\\]*/library#', $actual);
     }
 
     public function testAutoloadSpecificRevisionAddsPathToIncludePath()
     {
-        $this->autoloader->setZfPath($this->path, $this->specific);
+        $this->autoloader->setLaminasPath($this->path, $this->specific);
         $incPath = get_include_path();
         $this->assertRegexp('#' . preg_quote($this->specific) . '[^/\\\]*/library#', $incPath);
     }
