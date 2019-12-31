@@ -2,7 +2,7 @@
 
 ## Overview
 
-`Zend\Loader\StandardAutoloader` is designed as a
+`Laminas\Loader\StandardAutoloader` is designed as a
 [PSR-0](http://www.php-fig.org/psr/psr-0/)-compliant
 autoloader. It assumes a 1:1 mapping of the namespace+classname to the
 filesystem, wherein namespace separators and underscores are translated to
@@ -25,7 +25,7 @@ As a measure of last resort, you may also use the `StandardAutoloader` as a
 vendor prefix on the `include_path`. This practice is not recommended, however,
 due to performance implications.
 
-Finally, as with all autoloaders in zend-loader, the `StandardAutoloader` is
+Finally, as with all autoloaders in laminas-loader, the `StandardAutoloader` is
 capable of registering itself with PHP's SPL autoloader registry.
 
 > ### Vocabulary: Namespaces vs. Vendor Prefixes
@@ -53,7 +53,7 @@ with the SPL autoloader registry.
 ### Manual Configuration
 
 ```php
-use Zend\Loader\StandardAutoloader;
+use Laminas\Loader\StandardAutoloader;
 
 // This example assumes the StandardAutoloader is autoloadable.
 $loader = new StandardAutoloader();
@@ -83,7 +83,7 @@ The `StandardAutoloader` may also be configured at instantiation. Please note:
 The following is equivalent to the previous example.
 
 ```php
-use Zend\Loader\StandardAutoloader;
+use Laminas\Loader\StandardAutoloader;
 
 $loader = new StandardAutoloader([
     'namespaces' => [
@@ -121,22 +121,22 @@ A boolean value indicating whether or not this instance should act as a
 "fallback" autoloader (i.e., look for classes of any namespace or vendor prefix
 on the `include_path`). By default, `false`.
 
-> ### autoregister_zf is deprecated
+> ### autoregister_laminas is deprecated
 >
-> One other option is available to the `StandardAutoloader`: `autoregister_zf`.
+> One other option is available to the `StandardAutoloader`: `autoregister_laminas`.
 > We do not document it any longer, as it is no longer relevant.
 >
-> Starting with the 2.5.0 release of Zend Framework, the framework package
+> Starting with the 2.5.0 release of Laminas, the framework package
 > itself is a "metapackage", defining only a `composer.json` file listing
 > the packages for each component.
 >
-> As such, there is no single path in which all ZF files live, making the
-> `autoregister_zf` flag useless for versions starting with 2.5.0; it will
-> only register the zend-loader path!
+> As such, there is no single path in which all Laminas files live, making the
+> `autoregister_laminas` flag useless for versions starting with 2.5.0; it will
+> only register the laminas-loader path!
 >
 > If you are using this feature, you should update your code. We recommend
 > using [Composer](https://getcomposer.org)'s autoloader for autoloading
-> Zend Framework classes.
+> Laminas classes.
 
 ## Available Methods
 

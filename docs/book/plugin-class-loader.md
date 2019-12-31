@@ -24,7 +24,7 @@ with one or more plugin/class name associations, and then using it to retrieve
 the class name associated with a given plugin name.
 
 ```php
-use Zend\Http\HeaderLoader;
+use Laminas\Http\HeaderLoader;
 
 // Provide a global map, or override defaults:
 HeaderLoader::addStaticMap([
@@ -32,7 +32,7 @@ HeaderLoader::addStaticMap([
 ]);
 
 // Instantiate the loader:
-$loader = new Zend\Http\HeaderLoader();
+$loader = new Laminas\Http\HeaderLoader();
 
 // Register a new plugin:
 $loader->registerPlugin('xForwardedFor', 'My\Http\Header\XForwardedFor');
@@ -179,7 +179,7 @@ It's often convenient to provide global overrides or additions to the maps in a
 method:
 
 ```php
-use Zend\Loader\PluginClassLoader;
+use Laminas\Loader\PluginClassLoader;
 
 PluginClassLoader::addStaticMap([
     'xrequestedfor' => 'My\Http\Header\XRequestedFor',
@@ -190,7 +190,7 @@ Any later instances created will now have this map defined, allowing you to load
 that plugin.
 
 ```php
-use Zend\Loader\PluginClassLoader;
+use Laminas\Loader\PluginClassLoader;
 
 $loader = new PluginClassLoader();
 $class = $loader->load('xrequestedfor'); // My\Http\Header\XRequestedFor
@@ -205,7 +205,7 @@ the `PluginClassLoader` and define the map within the extending class.
 ```php
 namespace My\Plugins;
 
-use Zend\Loader\PluginClassLoader;
+use Laminas\Loader\PluginClassLoader;
 
 class PluginLoader extends PluginClassLoader
 {
@@ -234,7 +234,7 @@ to this extending class, declare a protected static `$staticMap` property:
 ```php
 namespace My\Plugins;
 
-use Zend\Loader\PluginClassLoader;
+use Laminas\Loader\PluginClassLoader;
 
 class PluginLoader extends PluginClassLoader
 {
@@ -255,7 +255,7 @@ PluginLoader::addStaticMap([
 ### Extending a plugin map using another plugin map
 
 In some cases, a general map class may already exist; as an example, several
-Zend Framework components defining plugin brokers have an associated
+Laminas components defining plugin brokers have an associated
 `PluginClassLoader` extension defining the plugins available for that component
 within the framework. What if you want to define some additions to these? Where
 should that code go?
@@ -270,8 +270,8 @@ instance of the class may then be passed to the constructor or
 ```php
 namespace My\Plugins;
 
-use Zend\Loader\PluginClassLoader;
-use Zend\Http\HeaderLoader;
+use Laminas\Loader\PluginClassLoader;
+use Laminas\Http\HeaderLoader;
 
 class PluginLoader extends PluginClassLoader
 {

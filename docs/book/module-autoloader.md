@@ -1,8 +1,8 @@
 # The ModuleAutoloader
 
-`Zend\Loader\ModuleAutoloader` is a special implementation of the
+`Laminas\Loader\ModuleAutoloader` is a special implementation of the
 [SplAutoloader](spl-autoloader.md) interface, and is consumed by
-[zend-modulemanager](https://github.com/zendframework/zend-modulemanager) to
+[laminas-modulemanager](https://github.com/laminas/laminas-modulemanager) to
 autoload `Module` classes from different locations.
 
 Apart from being able to autoload modules from directories, the
@@ -18,7 +18,7 @@ compression), as it introduces additional CPU overhead to every request.
 
 As the `ModuleAutoloader` is meant to be used with the `ModuleManager`, for
 examples of it's usage and how to configure it, please see the
-[Module Autoloader Usage](https://docs.zendframework.com/zend-modulemanager/module-autoloader/)
+[Module Autoloader Usage](https://docs.laminas.dev/laminas-modulemanager/module-autoloader/)
 documentation.
 
 ## Configuration Options

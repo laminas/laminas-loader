@@ -6,7 +6,7 @@ the file associated with that class on a match.  This avoids unnecessary
 filesystem operations, and can also ensure the autoloader "plays nice" with
 opcode caches and PHP's realpath cache.
 
-The zend-loader component provides a tool for generating classmaps via
+The laminas-loader component provides a tool for generating classmaps via
 `bin/classmap_generator.php`; read the [tool's documentation](classmap-generator.md) for more details.
 
 ## Quick Start
@@ -26,7 +26,7 @@ it the location of the map.
 
 ```php
 // This example assumes the ClassMapAutoloader is autoloadable.
-use Zend\Loader\ClassMapAutoloader;
+use Laminas\Loader\ClassMapAutoloader;
 
 $loader = new ClassMapAutoloader();
 
@@ -151,7 +151,7 @@ the `ClassMapAutoloader`, to its `setOptions()` method, or to
 `registerAutoloadMaps()`.
 
 ```php
-use Zend\Loader\ClassMapAutoloader;
+use Laminas\Loader\ClassMapAutoloader;
 
 /* The following are all equivalent */
 

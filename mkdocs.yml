@@ -1,6 +1,6 @@
 docs_dir: docs/book
 site_dir: docs/html
-pages:
+nav:
     - index.md
     - Reference:
         - AutoloaderFactory: autoloader-factory.md
@@ -12,7 +12,6 @@ pages:
         - ShortNameLocator: short-name-locator.md
         - PluginClassLocator: plugin-class-locator.md
         - "ClassMap Generator": classmap-generator.md
-site_name: zend-loader
-site_description: zend-loader
-repo_url: 'https://github.com/zendframework/zend-loader'
-copyright: 'Copyright (c) 2005-2018 <a href="https://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-loader
+site_description: laminas-loader
+repo_url: 'https://github.com/laminas/laminas-loader'
