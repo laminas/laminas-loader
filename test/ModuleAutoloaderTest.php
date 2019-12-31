@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
-use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Loader\ModuleAutoloader;
 use InvalidArgumentException;
+use Laminas\Loader\ModuleAutoloader;
+use PHPUnit_Framework_TestCase as TestCase;
 
 class ModuleAutoloaderTest extends TestCase
 {
@@ -137,7 +136,7 @@ class ModuleAutoloaderTest extends TestCase
     {
         $loader   = new ModuleAutoloader;
 
-        $class    = new \ReflectionClass('Zend\Loader\ModuleAutoloader');
+        $class    = new \ReflectionClass('Laminas\Loader\ModuleAutoloader');
         $property = $class->getProperty("pharBasePath");
         $property->setAccessible(true);
         $property->setValue($loader, 'phar://' . __DIR__ . '/_files/ApplicationModulePhar.phar');
@@ -150,9 +149,9 @@ class ModuleAutoloaderTest extends TestCase
     public function testProvidesFluidInterface()
     {
         $loader = new ModuleAutoloader;
-        $this->assertInstanceOf('Zend\Loader\ModuleAutoloader', $loader->setOptions(array('foo')));
-        $this->assertInstanceOf('Zend\Loader\ModuleAutoloader', $loader->registerPaths(array('foo')));
-        $this->assertInstanceOf('Zend\Loader\ModuleAutoloader', $loader->registerPath('foo'));
+        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->setOptions(array('foo')));
+        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->registerPaths(array('foo')));
+        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->registerPath('foo'));
     }
 
     public function testReturnsFalseForNonModuleClass()
