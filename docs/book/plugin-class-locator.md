@@ -11,7 +11,7 @@ Classes implementing the `PluginClassLocator` must implement the following three
 methods:
 
 ```php
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 interface PluginClassLocator
 {

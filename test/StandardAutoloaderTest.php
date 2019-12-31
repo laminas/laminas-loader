@@ -1,16 +1,17 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-loader for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-loader/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Loader;
+namespace LaminasTest\Loader;
 
+use Laminas\Loader\Exception\InvalidArgumentException;
+use Laminas\Loader\StandardAutoloader;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
-use Zend\Loader\Exception\InvalidArgumentException;
-use Zend\Loader\StandardAutoloader;
 
 /**
  * @group      Loader
@@ -83,10 +84,10 @@ class StandardAutoloaderTest extends TestCase
     {
         $options = [
             'namespaces' => [
-                'Zend\\'   => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+                'Laminas\\'   => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ],
             'prefixes'   => [
-                'Zend_'  => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+                'Laminas_'  => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ],
             'fallback_autoloader' => true,
         ];
@@ -100,10 +101,10 @@ class StandardAutoloaderTest extends TestCase
     public function testPassingTraversableOptionsPopulatesProperties()
     {
         $namespaces = new \ArrayObject([
-            'Zend\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'Laminas\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ]);
         $prefixes = new \ArrayObject([
-            'Zend_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'Laminas_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ]);
         $options = new \ArrayObject([
             'namespaces' => $namespaces,
@@ -120,17 +121,17 @@ class StandardAutoloaderTest extends TestCase
     public function testAutoloadsNamespacedClasses()
     {
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('ZendTest\UnusualNamespace', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest\UnusualNamespace\NamespacedClass');
-        $this->assertTrue(class_exists('ZendTest\UnusualNamespace\NamespacedClass', false));
+        $loader->registerNamespace('LaminasTest\UnusualNamespace', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest\UnusualNamespace\NamespacedClass');
+        $this->assertTrue(class_exists('LaminasTest\UnusualNamespace\NamespacedClass', false));
     }
 
     public function testAutoloadsVendorPrefixedClasses()
     {
         $loader = new StandardAutoloader();
-        $loader->registerPrefix('ZendTest_UnusualPrefix', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest_UnusualPrefix_PrefixedClass');
-        $this->assertTrue(class_exists('ZendTest_UnusualPrefix_PrefixedClass', false));
+        $loader->registerPrefix('LaminasTest_UnusualPrefix', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest_UnusualPrefix_PrefixedClass');
+        $this->assertTrue(class_exists('LaminasTest_UnusualPrefix_PrefixedClass', false));
     }
 
     public function testCanActAsFallbackAutoloader()
@@ -168,26 +169,25 @@ class StandardAutoloaderTest extends TestCase
     public function testAutoloadsNamespacedClassesWithUnderscores()
     {
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('ZendTest\UnusualNamespace', __DIR__ . '/TestAsset');
-        $loader->autoload('ZendTest\UnusualNamespace\Name_Space\Namespaced_Class');
-        $this->assertTrue(class_exists('ZendTest\UnusualNamespace\Name_Space\Namespaced_Class', false));
+        $loader->registerNamespace('LaminasTest\UnusualNamespace', __DIR__ . '/TestAsset');
+        $loader->autoload('LaminasTest\UnusualNamespace\Name_Space\Namespaced_Class');
+        $this->assertTrue(class_exists('LaminasTest\UnusualNamespace\Name_Space\Namespaced_Class', false));
     }
 
-    public function testZendFrameworkNamespaceIsNotLoadedByDefault()
+    public function testLaminasNamespaceIsNotLoadedByDefault()
     {
         $loader = new StandardAutoloader();
         $expected = [];
         $this->assertAttributeEquals($expected, 'namespaces', $loader);
     }
 
-    public function testCanTellAutoloaderToRegisterZendNamespaceAtInstantiation()
+    public function testCanTellAutoloaderToRegisterLaminasNamespaceAtInstantiation()
     {
-        $loader = new StandardAutoloader(['autoregister_zf' => true]);
+        $loader = new StandardAutoloader(['autoregister_laminas' => true]);
         $r      = new ReflectionClass($loader);
         $file   = $r->getFileName();
         $expected = [
-            'Zend\\'    => dirname(dirname($file)) . DIRECTORY_SEPARATOR,
-            'ZendXml\\' => dirname(dirname(dirname($file))) . DIRECTORY_SEPARATOR . 'ZendXml' . DIRECTORY_SEPARATOR,
+            'Laminas\\'    => dirname(dirname($file)) . DIRECTORY_SEPARATOR,
         ];
         $this->assertAttributeEquals($expected, 'namespaces', $loader);
     }
@@ -195,10 +195,10 @@ class StandardAutoloaderTest extends TestCase
     public function testWillLoopThroughAllNamespacesUntilMatchIsFoundWhenAutoloading()
     {
         $loader = new StandardAutoloader();
-        $loader->registerNamespace('ZendTest\Loader\TestAsset\Parent', __DIR__ . '/TestAsset/Parent');
-        $loader->registerNamespace('ZendTest\Loader\TestAsset\Parent\Child', __DIR__ . '/TestAsset/Child');
-        $result = $loader->autoload('ZendTest\Loader\TestAsset\Parent\Child\Subclass');
+        $loader->registerNamespace('LaminasTest\Loader\TestAsset\Parent', __DIR__ . '/TestAsset/Parent');
+        $loader->registerNamespace('LaminasTest\Loader\TestAsset\Parent\Child', __DIR__ . '/TestAsset/Child');
+        $result = $loader->autoload('LaminasTest\Loader\TestAsset\Parent\Child\Subclass');
         $this->assertNotFalse($result);
-        $this->assertTrue(class_exists('ZendTest\Loader\TestAsset\Parent\Child\Subclass', false));
+        $this->assertTrue(class_exists('LaminasTest\Loader\TestAsset\Parent\Child\Subclass', false));
     }
 }

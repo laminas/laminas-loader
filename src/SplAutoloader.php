@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @see       https://github.com/zendframework/zend-loader for the canonical source repository
- * @copyright Copyright (c) 2005-2018 Zend Technologies USA Inc. (https://www.zend.com)
- * @license   https://github.com/zendframework/zend-loader/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-loader for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 use Traversable;
 
-if (interface_exists('Zend\Loader\SplAutoloader')) {
+if (interface_exists('Laminas\Loader\SplAutoloader')) {
     return;
 }
 

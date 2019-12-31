@@ -6,7 +6,7 @@ providing alternate implementations possible, as developers can register custom
 code under an existing alias.
 
 In the first case, consider the adapter pattern. It's often unwieldy to utilize
-a full class name (e.g., `Zend\Cloud\DocumentService\Adapter\SimpleDb`); using
+a full class name (e.g., `Laminas\Cloud\DocumentService\Adapter\SimpleDb`); using
 the short name of the adapter, `SimpleDb`, would be much simpler.
 
 In the second case, consider the case of helpers. Let us assume we have a "url"
@@ -25,7 +25,7 @@ strategies defined by other interfaces, such as
 Implementing a `ShortNameLocator` requires defining three methods, as shown below.
 
 ```php
-namespace Zend\Loader;
+namespace Laminas\Loader;
 
 interface ShortNameLocator
 {
