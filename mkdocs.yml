@@ -15,3 +15,6 @@ nav:
 site_name: laminas-loader
 site_description: 'Autoloading and plugin loading strategies'
 repo_url: 'https://github.com/laminas/laminas-loader'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
