@@ -1,6 +1,6 @@
 # laminas-loader
 
-[![Build Status](https://travis-ci.org/laminas/laminas-loader.svg?branch=master)](https://travis-ci.org/laminas/laminas-loader)
+[![Build Status](https://travis-ci.com/laminas/laminas-loader.svg?branch=master)](https://travis-ci.com/laminas/laminas-loader)
 [![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-loader/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-loader?branch=master)
 
 laminas-loader provides different strategies for autoloading PHP classes.
