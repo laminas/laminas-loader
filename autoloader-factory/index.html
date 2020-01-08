@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -261,26 +265,24 @@ for 3rd party libraries. The factory uses configuration, allowing you to cache
 your autoloader definitions or define them centrally for your application.</p>
 <h2 id="quick-start">Quick Start</h2>
 <p>The <code>AutoloaderFactory</code> expects an array of configuration.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$config = [</span>
-<span class=x>    &#39;Laminas\Loader\ClassMapAutoloader&#39; =&gt; [</span>
-<span class=x>        &#39;application&#39; =&gt; APPLICATION_PATH . &#39;/.classmap.php&#39;,</span>
-<span class=x>        &#39;laminas&#39;          =&gt; APPLICATION_PATH . &#39;/../library/Laminas/.classmap.php&#39;,</span>
-<span class=x>    ],</span>
-<span class=x>    &#39;Laminas\Loader\StandardAutoloader&#39; =&gt; [</span>
-<span class=x>        &#39;namespaces&#39; =&gt; [</span>
-<span class=x>            &#39;Phly\Mustache&#39; =&gt; APPLICATION_PATH . &#39;/../library/Phly/Mustache&#39;,</span>
-<span class=x>            &#39;Doctrine&#39;      =&gt; APPLICATION_PATH . &#39;/../library/Doctrine&#39;,</span>
-<span class=x>        ],</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$config = [
+    'Laminas\Loader\ClassMapAutoloader' =&gt; [
+        'application' =&gt; APPLICATION_PATH . '/.classmap.php',
+        'laminas'          =&gt; APPLICATION_PATH . '/../library/Laminas/.classmap.php',
+    ],
+    'Laminas\Loader\StandardAutoloader' =&gt; [
+        'namespaces' =&gt; [
+            'Phly\Mustache' =&gt; APPLICATION_PATH . '/../library/Phly/Mustache',
+            'Doctrine'      =&gt; APPLICATION_PATH . '/../library/Doctrine',
+        ],
+    ],
+];</code></pre>
 <p>Once you have your configuration in a PHP array, pass it to the
 <code>AutoloaderFactory</code>:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// This example assumes that the AutoloaderFactory is itself autoloadable!</span>
-<span class=x>use Laminas\Loader\AutoloaderFactory;</span>
+<pre class=codehilite><code class=language-php>// This example assumes that the AutoloaderFactory is itself autoloadable!
+use Laminas\Loader\AutoloaderFactory;
 
-<span class=x>AutoloaderFactory::factory($config);</span>
-</pre></div></p>
+AutoloaderFactory::factory($config);</code></pre>
 <p>The <code>AutoloaderFactory</code> will instantiate each autoloader with the given options,
 and also call its <code>register()</code> method to register it with the SPL autoloader.</p>
 <h2 id="configuration-options">Configuration options</h2>
@@ -294,35 +296,30 @@ If the class is not found, or does not implement the
 <a href="../spl-autoloader/">SplAutoloader</a> interface, an exception will be raised.</p>
 <h2 id="available-methods">Available methods</h2>
 <h3>factory</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static factory(array|Traversable $options) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static factory(array|Traversable $options) : void</code></pre>
 <p>Instantiate and register autoloaders.</p>
 <p>This method is <strong>static</strong>, and is used to instantiate autoloaders and register them
 with the SPL autoloader. It expects either an array or <code>Traversable</code> object as denoted in the
 <a href="#configuration options">options section</a>.</p>
 <h3>getRegisteredAutoloaders</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static getRegisteredAutoloaders() : SplAutoloader[]</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static getRegisteredAutoloaders() : SplAutoloader[]</code></pre>
 <p>Retrieve a list of all autoloaders registered using the factory.</p>
 <p>This method is <strong>static</strong>, and may be used to retrieve a list of all autoloaders
 registered via the <code>factory()</code> method. It returns an array of <code>SplAutoloader</code>
 instances.</p>
 <h3>getRegisteredAutoloader</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static getRegisteredAutoloader($class) : SplAutoloader</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static getRegisteredAutoloader($class) : SplAutoloader</code></pre>
 <p>Retrieve an autoloader by class name.</p>
 <p>This method is <strong>static</strong>, and is used to retrieve a specific autoloader by
 class name. If the autoloader is not registered, an exception will be thrown.</p>
 <h3>unregisterAutoloaders</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static unregisterAutoloaders() : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static unregisterAutoloaders() : void</code></pre>
 <p>Unregister all autoloaders registered via the factory.</p>
 <p>This method is <strong>static</strong>, and can be used to unregister all autoloaders that
 were registered via the factory. Note that this will <strong>not</strong> unregister
 autoloaders that were registered outside of the factory.</p>
 <h3>unregisterAutoloader</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static unregisterAutoloader($class) : bool</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static unregisterAutoloader($class) : bool</code></pre>
 <p>Unregister an autoloader registered via the factory.</p>
 <p>This method is <strong>static</strong>, and can be used to unregister an autoloader that was
 registered via the factory. Note that this will <strong>not</strong> unregister autoloaders
@@ -483,9 +480,10 @@ the factory, after unregistering it will return <code>TRUE</code>, otherwise <co
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -522,7 +520,7 @@ the factory, after unregistering it will return <code>TRUE</code>, otherwise <co
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-loader//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -531,8 +529,8 @@ the factory, after unregistering it will return <code>TRUE</code>, otherwise <co
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-loader//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

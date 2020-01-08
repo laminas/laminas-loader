@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -268,46 +272,41 @@ associative array that represents the class map. In this example, the class map
 is located at <code>Some/Directory/autoload_classmap.php</code>.</p>
 <p>Within your code, instantiate the <code>ClassMapAutoloader</code>, and provide it the
 location of the map.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// This example assumes the ClassMapAutoloader is autoloadable.</span>
-<span class=x>use Laminas\Loader\ClassMapAutoloader;</span>
+<pre class=codehilite><code class=language-php>// This example assumes the ClassMapAutoloader is autoloadable.
+use Laminas\Loader\ClassMapAutoloader;
 
-<span class=x>$loader = new ClassMapAutoloader();</span>
+$loader = new ClassMapAutoloader();
 
-<span class=x>// Register the class map:</span>
-<span class=x>$loader-&gt;registerAutoloadMap(&#39;Some/Directory/autoload_classmap.php&#39;);</span>
+// Register the class map:
+$loader-&gt;registerAutoloadMap('Some/Directory/autoload_classmap.php');
 
-<span class=x>// Register with spl_autoload:</span>
-<span class=x>$loader-&gt;register();</span>
-</pre></div></p>
+// Register with spl_autoload:
+$loader-&gt;register();</code></pre>
 <p>At this point, you may now use any classes referenced in your class map.</p>
 <h2 id="configuration-options">Configuration Options</h2>
 <p>The <code>ClassMapAutoloader</code> expects an array of options, where each option is
 either a filename referencing a class map, or an associative array of class
 name/filename pairs.</p>
 <p>As an example:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Configuration defining both a file-based class map, and an array map</span>
-<span class=x>$config = [</span>
-<span class=x>    __DIR__ . &#39;/library/autoloader_classmap.php&#39;, // file-based class map</span>
-<span class=x>    [                                             // array class map</span>
-<span class=x>        &#39;Application\Bootstrap&#39; =&gt; __DIR__ . &#39;/application/Bootstrap.php&#39;,</span>
-<span class=x>        &#39;Test\Bootstrap&#39;        =&gt; __DIR__ . &#39;/tests/Bootstrap.php&#39;,</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// Configuration defining both a file-based class map, and an array map
+$config = [
+    __DIR__ . '/library/autoloader_classmap.php', // file-based class map
+    [                                             // array class map
+        'Application\Bootstrap' =&gt; __DIR__ . '/application/Bootstrap.php',
+        'Test\Bootstrap'        =&gt; __DIR__ . '/tests/Bootstrap.php',
+    ],
+];</code></pre>
 <h2 id="available-methods">Available Methods</h2>
 <h3>__construct</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>__construct(array|Traversable $options = null) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>__construct(array|Traversable $options = null) : void</code></pre>
 <p>Initialize and configure the object <code>__construct($options = null)</code>; <code>$options</code>
 will be passed to <a href="#setoptions">setOptions()</a>.</p>
 <h3>setOptions</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>setOptions(array|Traversable $options) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>setOptions(array|Traversable $options) : void</code></pre>
 <p>Configures the state of the autoloader, including registering class maps.
 <code>$options</code> will be passed to <a href="#registerautoloadmaps">registerAutoloadMaps()</a>.</p>
 <h3>registerAutoloadMap</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>registerAutoloadMap(string|array $map) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>registerAutoloadMap(string|array $map) : void</code></pre>
 <p>Registers a class map with the autoloader. <code>$map</code> may be either a string
 referencing a PHP script that returns a class map, or an array defining a class
 map.</p>
@@ -315,22 +314,18 @@ map.</p>
 previous, meaning it's possible for a later class map to overwrite entries from
 a previously registered map.</p>
 <h3>registerAutoloadMaps</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>registerAutoloadMaps(array|Traversable $maps) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>registerAutoloadMaps(array|Traversable $maps) : void</code></pre>
 <p>Register multiple class maps with the autoloader, iterating over <code>$maps</code> and
 passing each value to <a href="#registerautoloadmap">registerAutoloadMap()</a>.</p>
 <h3>getAutoloadMap</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getAutoloadMap() : array</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getAutoloadMap() : array</code></pre>
 <p>Retrieves the current class map as an associative array.</p>
 <h3>autoload</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>autoload(string $class) : false|string</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>autoload(string $class) : false|string</code></pre>
 <p>Attempts to load the class specified. Returns a boolean <code>false</code> on failure, or a
 string indicating the class loaded on success.</p>
 <h3>register</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>register() : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>register() : void</code></pre>
 <p>Registers the <code>autoload()</code> method of the current instance with
 <code>spl_autoload_register()</code>.</p>
 <h2 id="examples">Examples</h2>
@@ -338,33 +333,31 @@ string indicating the class loaded on success.</p>
 <p>You can use configuration to seed a <code>ClassMapAutoloader</code>; values might come from
 a configuration file, a cache, or even a PHP array.  The following is an example
 of a PHP array that could be used to configure the autoloader:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>// Configuration defining both a file-based class map, and an array map</span>
-<span class=x>$config = [</span>
-<span class=x>    APPLICATION_PATH . &#39;/../library/autoloader_classmap.php&#39;, // file-based class map</span>
-<span class=x>    [                                                         // array class map</span>
-<span class=x>        &#39;Application\Bootstrap&#39; =&gt; APPLICATION_PATH . &#39;/Bootstrap.php&#39;,</span>
-<span class=x>        &#39;Test\Bootstrap&#39;        =&gt; APPLICATION_PATH . &#39;/../tests/Bootstrap.php&#39;,</span>
-<span class=x>    ],</span>
-<span class=x>];</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>// Configuration defining both a file-based class map, and an array map
+$config = [
+    APPLICATION_PATH . '/../library/autoloader_classmap.php', // file-based class map
+    [                                                         // array class map
+        'Application\Bootstrap' =&gt; APPLICATION_PATH . '/Bootstrap.php',
+        'Test\Bootstrap'        =&gt; APPLICATION_PATH . '/../tests/Bootstrap.php',
+    ],
+];</code></pre>
 <p>Once you have your configuration, you can pass it either to the constructor of
 the <code>ClassMapAutoloader</code>, to its <code>setOptions()</code> method, or to
 <code>registerAutoloadMaps()</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Loader\ClassMapAutoloader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Loader\ClassMapAutoloader;
 
-<span class=x>/* The following are all equivalent */</span>
+/* The following are all equivalent */
 
-<span class=x>// To the constructor:</span>
-<span class=x>$loader = new ClassMapAutoloader($config);</span>
+// To the constructor:
+$loader = new ClassMapAutoloader($config);
 
-<span class=x>// To setOptions():</span>
-<span class=x>$loader = new ClassMapAutoloader();</span>
-<span class=x>$loader-&gt;setOptions($config);</span>
+// To setOptions():
+$loader = new ClassMapAutoloader();
+$loader-&gt;setOptions($config);
 
-<span class=x>// To registerAutoloadMaps():</span>
-<span class=x>$loader = new ClassMapAutoloader();</span>
-<span class=x>$loader-&gt;registerAutoloadMaps($config);</span>
-</pre></div></p>
+// To registerAutoloadMaps():
+$loader = new ClassMapAutoloader();
+$loader-&gt;registerAutoloadMaps($config);</code></pre>
 
 
 
@@ -520,9 +513,10 @@ the <code>ClassMapAutoloader</code>, to its <code>setOptions()</code> method, or
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -559,7 +553,7 @@ the <code>ClassMapAutoloader</code>, to its <code>setOptions()</code> method, or
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-loader//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -568,8 +562,8 @@ the <code>ClassMapAutoloader</code>, to its <code>setOptions()</code> method, or
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-loader//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

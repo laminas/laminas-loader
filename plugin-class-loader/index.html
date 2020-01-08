@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -275,22 +279,21 @@ powerful capability.</p>
 <p>Typical use cases involve instantiating a <code>PluginClassLoader</code>, seeding it
 with one or more plugin/class name associations, and then using it to retrieve
 the class name associated with a given plugin name.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Http\HeaderLoader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Http\HeaderLoader;
 
-<span class=x>// Provide a global map, or override defaults:</span>
-<span class=x>HeaderLoader::addStaticMap([</span>
-<span class=x>    &#39;xrequestedfor&#39; =&gt; &#39;My\Http\Header\XRequestedFor&#39;,</span>
-<span class=x>]);</span>
+// Provide a global map, or override defaults:
+HeaderLoader::addStaticMap([
+    'xrequestedfor' =&gt; 'My\Http\Header\XRequestedFor',
+]);
 
-<span class=x>// Instantiate the loader:</span>
-<span class=x>$loader = new Laminas\Http\HeaderLoader();</span>
+// Instantiate the loader:
+$loader = new Laminas\Http\HeaderLoader();
 
-<span class=x>// Register a new plugin:</span>
-<span class=x>$loader-&gt;registerPlugin(&#39;xForwardedFor&#39;, &#39;My\Http\Header\XForwardedFor&#39;);</span>
+// Register a new plugin:
+$loader-&gt;registerPlugin('xForwardedFor', 'My\Http\Header\XForwardedFor');
 
-<span class=x>// Load/retrieve the associated plugin class:</span>
-<span class=x>$class = $loader-&gt;load(&#39;xrequestedfor&#39;); // &#39;My\Http\Header\XRequestedFor&#39;</span>
-</pre></div></p>
+// Load/retrieve the associated plugin class:
+$class = $loader-&gt;load('xrequestedfor'); // 'My\Http\Header\XRequestedFor'</code></pre>
 <blockquote>
 <h3>Case Sensitivity</h3>
 <p>The <code>PluginClassLoader</code> is designed to do case-insensitive plugin name
@@ -304,15 +307,13 @@ overwrite this entry.</p>
 corresponding to a plugin name and class name, respectively.</p>
 <h2 id="available-methods">Available Methods</h2>
 <h3>__construct</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>__construct(string|array|Traversable $map = null) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>__construct(string|array|Traversable $map = null) : void</code></pre>
 <p>The constructor is used to instantiate and initialize the plugin class loader.
 If passed a string, an array, or a <code>Traversable</code> object, it will pass this to
 the <a href="#registerplugins">registerPlugins()</a> method in order to seed (or overwrite)
 the plugin class map.</p>
 <h3>addStaticMap</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>static addStaticMap(array|Traversable $map) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>static addStaticMap(array|Traversable $map) : void</code></pre>
 <p>Static method for globally pre-seeding the loader with a class map. It accepts
 either an array or <code>Traversable</code> object of plugin name/class name pairs.</p>
 <p>When using this method, be certain you understand the precedence in which maps
@@ -328,14 +329,12 @@ will be merged; in decreasing order of preference:</p>
 <p>Also, please note that calling the method will <strong>not</strong> affect any instances
 already created.</p>
 <h3>registerPlugin</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>registerPlugin(string $shortName, string $className) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>registerPlugin(string $shortName, string $className) : void</code></pre>
 <p>Defined by the <a href="../plugin-class-locator/">PluginClassLocator</a> interface. Expects
 two string arguments, the plugin <code>$shortName</code>, and the class <code>$className</code> which
 it represents.</p>
 <h3>registerPlugins</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>registerPlugins(string|array|Traversable $map) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>registerPlugins(string|array|Traversable $map) : void</code></pre>
 <p>If a string argument is provided, <code>registerPlugins()</code> assumes this is a class
 name. If the class does not exist, an exception will be thrown. If it does, it
 then instantiates the class and checks to see whether or not it implements
@@ -344,34 +343,28 @@ then instantiates the class and checks to see whether or not it implements
 <a href="#registerPlugin">registerPlugin()</a> using the key as the plugin name and the
 value as the class name.</p>
 <h3>unregisterPlugin</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>unregisterPlugin(string $shortName) : void</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>unregisterPlugin(string $shortName) : void</code></pre>
 <p>Defined by the <code>PluginClassLocator</code> interface; remove a plugin/class association
 from the plugin class map.</p>
 <h3>getRegisteredPlugins</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getRegisteredPlugins() : array</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getRegisteredPlugins() : array</code></pre>
 <p>Defined by the <code>PluginClassLocator</code> interface; return the entire plugin class
 map as an array.</p>
 <h3>isLoaded</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>isLoaded(string $name) : bool</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>isLoaded(string $name) : bool</code></pre>
 <p>Defined by the <code>ShortNameLocator</code> interface; determine if the given plugin has
 been resolved to a class name.</p>
 <h3>getClassName</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getClassName(string $name) : string</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getClassName(string $name) : string</code></pre>
 <p>Defined by the <code>ShortNameLocator</code> interface; return the class name to which a
 plugin name resolves.</p>
 <h3>load</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>load(string $name) : string|false</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>load(string $name) : string|false</code></pre>
 <p>Defined by the <code>ShortNameLocator</code> interface; attempt to resolve a plugin name to
 a class name. If successful, returns the class name; otherwise, returns a
 boolean <code>false</code>.</p>
 <h3>getIterator</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getIterator() : Traversable</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getIterator() : Traversable</code></pre>
 <p>Defined by the <code>IteratorAggregate</code> interface; allows iteration over the plugin
 class map. This can come in useful for using <code>PluginClassLoader</code> instances to
 other <code>PluginClassLoader</code> instances in order to merge maps.</p>
@@ -380,62 +373,56 @@ other <code>PluginClassLoader</code> instances in order to merge maps.</p>
 <p>It's often convenient to provide global overrides or additions to the maps in a
 <code>PluginClassLoader</code> instance. This can be done using the <code>addStaticMap()</code>
 method:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Loader\PluginClassLoader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Loader\PluginClassLoader;
 
-<span class=x>PluginClassLoader::addStaticMap([</span>
-<span class=x>    &#39;xrequestedfor&#39; =&gt; &#39;My\Http\Header\XRequestedFor&#39;,</span>
-<span class=x>]);</span>
-</pre></div></p>
+PluginClassLoader::addStaticMap([
+    'xrequestedfor' =&gt; 'My\Http\Header\XRequestedFor',
+]);</code></pre>
 <p>Any later instances created will now have this map defined, allowing you to load
 that plugin.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Loader\PluginClassLoader;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Loader\PluginClassLoader;
 
-<span class=x>$loader = new PluginClassLoader();</span>
-<span class=x>$class = $loader-&gt;load(&#39;xrequestedfor&#39;); // My\Http\Header\XRequestedFor</span>
-</pre></div></p>
+$loader = new PluginClassLoader();
+$class = $loader-&gt;load('xrequestedfor'); // My\Http\Header\XRequestedFor</code></pre>
 <h3>Creating a pre-loaded map</h3>
 <p>In many cases, you know exactly which plugins you may be drawing upon on a
 regular basis, and which classes they will refer to. In this case, extend
 the <code>PluginClassLoader</code> and define the map within the extending class.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\Plugins;</span>
+<pre class=codehilite><code class=language-php>namespace My\Plugins;
 
-<span class=x>use Laminas\Loader\PluginClassLoader;</span>
+use Laminas\Loader\PluginClassLoader;
 
-<span class=x>class PluginLoader extends PluginClassLoader</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @var array Plugin map</span>
-<span class=x>     */</span>
-<span class=x>    protected $plugins = [</span>
-<span class=x>        &#39;foo&#39;    =&gt; &#39;My\Plugins\Foo&#39;,</span>
-<span class=x>        &#39;bar&#39;    =&gt; &#39;My\Plugins\Bar&#39;,</span>
-<span class=x>        &#39;foobar&#39; =&gt; &#39;My\Plugins\FooBar&#39;,</span>
-<span class=x>    ];</span>
-<span class=x>}</span>
-</pre></div></p>
+class PluginLoader extends PluginClassLoader
+{
+    /**
+     * @var array Plugin map
+     */
+    protected $plugins = [
+        'foo'    =&gt; 'My\Plugins\Foo',
+        'bar'    =&gt; 'My\Plugins\Bar',
+        'foobar' =&gt; 'My\Plugins\FooBar',
+    ];
+}</code></pre>
 <p>At this point, you can instantiate the map and immediately use it.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$loader = new My\Plugins\PluginLoader();</span>
-<span class=x>$class  = $loader-&gt;load(&#39;foobar&#39;); // My\Plugins\FooBar</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$loader = new My\Plugins\PluginLoader();
+$class  = $loader-&gt;load('foobar'); // My\Plugins\FooBar</code></pre>
 <p><code>PluginClassLoader</code> makes use of late static binding, allowing per-class static
 maps. If you want to allow defining a <a href="#using-static-maps">static map</a> specific
 to this extending class, declare a protected static <code>$staticMap</code> property:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\Plugins;</span>
+<pre class=codehilite><code class=language-php>namespace My\Plugins;
 
-<span class=x>use Laminas\Loader\PluginClassLoader;</span>
+use Laminas\Loader\PluginClassLoader;
 
-<span class=x>class PluginLoader extends PluginClassLoader</span>
-<span class=x>{</span>
-<span class=x>    protected static $staticMap = [];</span>
+class PluginLoader extends PluginClassLoader
+{
+    protected static $staticMap = [];
 
-<span class=x>    // ...</span>
-<span class=x>}</span>
-</pre></div></p>
+    // ...
+}</code></pre>
 <p>To inject the static map, call the <code>addStaticMap()</code> on the extension class:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>PluginLoader::addStaticMap([</span>
-<span class=x>    &#39;baz&#39; =&gt; &#39;My\Plugins\Baz&#39;,</span>
-<span class=x>]);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>PluginLoader::addStaticMap([
+    'baz' =&gt; 'My\Plugins\Baz',
+]);</code></pre>
 <h3>Extending a plugin map using another plugin map</h3>
 <p>In some cases, a general map class may already exist; as an example, several
 Laminas components defining plugin brokers have an associated
@@ -447,31 +434,30 @@ the configuration into an instance of the plugin loader.</p>
 <p>Another solution is to define a new plugin map class. The class name or an
 instance of the class may then be passed to the constructor or
 <code>registerPlugins()</code>.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace My\Plugins;</span>
+<pre class=codehilite><code class=language-php>namespace My\Plugins;
 
-<span class=x>use Laminas\Loader\PluginClassLoader;</span>
-<span class=x>use Laminas\Http\HeaderLoader;</span>
+use Laminas\Loader\PluginClassLoader;
+use Laminas\Http\HeaderLoader;
 
-<span class=x>class PluginLoader extends PluginClassLoader</span>
-<span class=x>{</span>
-<span class=x>    /**</span>
-<span class=x>     * @var array Plugin map</span>
-<span class=x>     */</span>
-<span class=x>    protected $plugins = [</span>
-<span class=x>        &#39;foo&#39;    =&gt; &#39;My\Plugins\Foo&#39;,</span>
-<span class=x>        &#39;bar&#39;    =&gt; &#39;My\Plugins\Bar&#39;,</span>
-<span class=x>        &#39;foobar&#39; =&gt; &#39;My\Plugins\FooBar&#39;,</span>
-<span class=x>    ];</span>
-<span class=x>}</span>
+class PluginLoader extends PluginClassLoader
+{
+    /**
+     * @var array Plugin map
+     */
+    protected $plugins = [
+        'foo'    =&gt; 'My\Plugins\Foo',
+        'bar'    =&gt; 'My\Plugins\Bar',
+        'foobar' =&gt; 'My\Plugins\FooBar',
+    ];
+}
 
-<span class=x>// Inject in constructor:</span>
-<span class=x>$loader = new HeaderLoader(PluginLoader::class); // as string class name</span>
-<span class=x>$loader = new HeaderLoader(new PluginLoader());  // as instance</span>
+// Inject in constructor:
+$loader = new HeaderLoader(PluginLoader::class); // as string class name
+$loader = new HeaderLoader(new PluginLoader());  // as instance
 
-<span class=x>// Or via registerPlugins():</span>
-<span class=x>$loader-&gt;registerPlugins(PluginLoader::class); // as string class name</span>
-<span class=x>$loader-&gt;registerPlugins(new PluginLoader());  // as instance</span>
-</pre></div></p>
+// Or via registerPlugins():
+$loader-&gt;registerPlugins(PluginLoader::class); // as string class name
+$loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
 
 
 
@@ -627,9 +613,10 @@ instance of the class may then be passed to the constructor or
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -666,7 +653,7 @@ instance of the class may then be passed to the constructor or
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-loader//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -675,8 +662,8 @@ instance of the class may then be passed to the constructor or
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-loader//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

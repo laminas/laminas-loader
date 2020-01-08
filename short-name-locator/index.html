@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -271,30 +275,26 @@ strategies defined by other interfaces, such as
 <a href="../plugin-class-locator/">PluginClassLocator</a>.</p>
 <h2 id="quick-start">Quick Start</h2>
 <p>Implementing a <code>ShortNameLocator</code> requires defining three methods, as shown below.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Laminas\Loader;</span>
+<pre class=codehilite><code class=language-php>namespace Laminas\Loader;
 
-<span class=x>interface ShortNameLocator</span>
-<span class=x>{</span>
-<span class=x>    public function isLoaded($name);</span>
-<span class=x>    public function getClassName($name);</span>
-<span class=x>    public function load($name);</span>
-<span class=x>}</span>
-</pre></div></p>
+interface ShortNameLocator
+{
+    public function isLoaded($name);
+    public function getClassName($name);
+    public function load($name);
+}</code></pre>
 <h2 id="configuration-options">Configuration Options</h2>
 <p>This component defines no configuration options, as it is an interface.</p>
 <h2 id="available-methods">Available Methods</h2>
 <h3>isLoaded</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>isLoaded(string $name) : bool</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>isLoaded(string $name) : bool</code></pre>
 <p>Implement this method to return a boolean indicating whether or not the class
 has been able to resolve the plugin name to a class.</p>
 <h3>getClassName</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>getClassName(string $name) : string</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>getClassName(string $name) : string</code></pre>
 <p>Implement this method to return the class name associated with a plugin name.</p>
 <h3>load</h3>
-<p> <div class=codehilite><pre><span></span><span class=x>load($name) : string|false</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>load($name) : string|false</code></pre>
 <p>This method should resolve a plugin name to a class name.</p>
 
 
@@ -451,9 +451,10 @@ has been able to resolve the plugin name to a class.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -490,7 +491,7 @@ has been able to resolve the plugin name to a class.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-loader//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -499,8 +500,8 @@ has been able to resolve the plugin name to a class.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-loader//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>

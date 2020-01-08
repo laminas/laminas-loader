@@ -6,10 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Autoloading and plugin loading strategies">  
-    <link rel="canonical" href="https://docs.laminas.dev/standard-autoloader/">
     <link rel="shortcut icon" href="/img/trademark-laminas-foundation-rgb.svg">
 
-    <title>StandardAutoloader - laminas-loader - Laminas Docs</title>
+    <title>laminas-loader - Laminas Docs</title>
 
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -59,7 +58,7 @@
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-loader</a>
+            <a href="../.">laminas-loader</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -84,8 +83,8 @@
 
                                     
                                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">StandardAutoloader</a>
+    <li class="subnavigation__list-item ">
+        <a href="../standard-autoloader/" class="subnavigation__link">StandardAutoloader</a>
     </li>
 
                                     
@@ -196,270 +195,21 @@
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 
-    
-
-    
-    
-        <div class="toc">
-            <h6 class="toc__headline">On this page</h6>
-            <ul class="toc__list">
-                
-                    <li class="toc__entry">
-                        <a href="#overview" class="toc__link">Overview</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#quick-start" class="toc__link">Quick Start</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#configuration-options" class="toc__link">Configuration Options</a>
-                    </li>
-                
-                    <li class="toc__entry">
-                        <a href="#available-methods" class="toc__link">Available Methods</a>
-                    </li>
-                
-            </ul>
-        </div>
-    
-
             </div>
             <div class="col-md-7 col-sm-12 content" role="main" data-spy="scroll" data-target=".toc">
                 
-                    <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        
-            <li class="breadcrumb-item"><a href="">Overview</a></li>
 
-            
-                <li class="breadcrumb-item"><a href="..">laminas-loader</a></li>
-
-                
-                    
-                        
-                        
-                            <li class="breadcrumb-item">Reference</li>
-                        
-                    
-                
-
-                <li class="breadcrumb-item active" aria-current="page">StandardAutoloader</li>
-            
-        
-    </ol>
-</nav>
-
-
-
-
-
-
-    
-    
-        <h2 class="chapter__headline">Reference</h2>
-    
-
-    <h1 id="the-standardautoloader">The StandardAutoloader</h1>
-<h2 id="overview">Overview</h2>
-<p><code>Laminas\Loader\StandardAutoloader</code> is designed as a
-<a href="http://www.php-fig.org/psr/psr-0/">PSR-0</a>-compliant
-autoloader. It assumes a 1:1 mapping of the namespace+classname to the
-filesystem, wherein namespace separators and underscores are translated to
-directory separators. The following statement illustrates how resolution works:</p>
-<pre class=codehilite><code class=language-php>$filename = str_replace(
-    ['_', '\\'],
-    DIRECTORY_SEPARATOR,
-    $classname
-) . '.php';</code></pre>
-<p>The <code>StandardAutoloader</code> requires that you explicitly register namespace/path
-pairs (or vendor prefix/path pairs), and will only load a file if it exists
-within the given path. Multiple pairs may be provided.</p>
-<p>As a measure of last resort, you may also use the <code>StandardAutoloader</code> as a
-"fallback" autoloader &mdash; one that will look for classes of any namespace or
-vendor prefix on the <code>include_path</code>. This practice is not recommended, however,
-due to performance implications.</p>
-<p>Finally, as with all autoloaders in laminas-loader, the <code>StandardAutoloader</code> is
-capable of registering itself with PHP's SPL autoloader registry.</p>
+<h1 class="content__title">404</h1>
 <blockquote>
-<h3>Vocabulary: Namespaces vs. Vendor Prefixes</h3>
-<p>In terms of autoloading, a "namespace" corresponds to PHP's own definition of
-namespaces.</p>
-<p>A "vendor prefix" refers to the practice, popularized in PHP versions prior to
-5.3, of providing a pseudo-namespace in the form of underscore-separated words
-in class names. As an example, the class <code>Phly_Couch_Document</code> uses a vendor
-prefix of <code>Phly</code>, and a component prefix of <code>Phly_Couch</code>, but it is a class
-sitting in the global namespace.</p>
-<p>The <code>StandardAutoloader</code> is capable of loading either namespaced or vendor
-prefixed class names, but treats them separately when attempting to match them
-to an appropriate path.</p>
+    <h3>Something went wrong!</h3>
+    <p>
+        We're sorry, but the page you are looking for does not exist.
+    </p>
 </blockquote>
-<h2 id="quick-start">Quick Start</h2>
-<p>Basic use of the <code>StandardAutoloader</code> requires registering namespace/path pairs.
-This can either be done at instantiation, or via explicit method calls after the
-object has been initialized.  Calling <code>register()</code> will register the autoloader
-with the SPL autoloader registry.</p>
-<h3>Manual Configuration</h3>
-<pre class=codehilite><code class=language-php>use Laminas\Loader\StandardAutoloader;
 
-// This example assumes the StandardAutoloader is autoloadable.
-$loader = new StandardAutoloader();
-
-// Register the &quot;Phly&quot; namespace:
-$loader-&gt;registerNamespace('Phly', APPLICATION_PATH . '/../library/Phly');
-
-// Register the &quot;Scapi&quot; vendor prefix:
-$loader-&gt;registerPrefix('Scapi', APPLICATION_PATH . '/../library/Scapi');
-
-// Optionally, specify the autoloader as a &quot;fallback&quot; autoloader;
-// this is not recommended.
-$loader-&gt;setFallbackAutoloader(true);
-
-// Register with spl_autoload:
-$loader-&gt;register();</code></pre>
-<h3>Configuration at Instantiation</h3>
-<p>The <code>StandardAutoloader</code> may also be configured at instantiation. Please note:</p>
-<ul>
-<li>The argument passed may be either an array or a <code>Traversable</code> object.</li>
-<li>The argument passed should also be a valid argument for passing to the
-  <code>setOptions()</code> method.</li>
-</ul>
-<p>The following is equivalent to the previous example.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Loader\StandardAutoloader;
-
-$loader = new StandardAutoloader([
-    'namespaces' =&gt; [
-        'Phly' =&gt; APPLICATION_PATH . '/../library/Phly',
-    ],
-    'prefixes' =&gt; [
-        'Scapi' =&gt; APPLICATION_PATH . '/../library/Scapi',
-    ],
-    'fallback_autoloader' =&gt; true,
-]);
-
-// Register with spl_autoload:
-$loader-&gt;register();</code></pre>
-<h2 id="configuration-options">Configuration Options</h2>
-<p>The <code>StandardAutoloader</code> defines the following options.</p>
-<h3>namespaces</h3>
-<p>An associative array of namespace/path pairs. The path should be an absolute
-path or path relative to the calling script, and contain only classes that live
-in that namespace (or its subnamespaces).</p>
-<h3>prefixes</h3>
-<p>An associative array of vendor prefix/path pairs. The path should be an absolute
-path or path relative to the calling script, and contain only classes that begin
-with the provided vendor prefix.</p>
-<h3>fallback_autoloader</h3>
-<p>A boolean value indicating whether or not this instance should act as a
-"fallback" autoloader (i.e., look for classes of any namespace or vendor prefix
-on the <code>include_path</code>). By default, <code>false</code>.</p>
-<blockquote>
-<h3>autoregister_laminas is deprecated</h3>
-<p>One other option is available to the <code>StandardAutoloader</code>: <code>autoregister_laminas</code>.
-We do not document it any longer, as it is no longer relevant.</p>
-<p>Starting with the 2.5.0 release of Laminas, the framework package
-itself is a "metapackage", defining only a <code>composer.json</code> file listing
-the packages for each component.</p>
-<p>As such, there is no single path in which all Laminas files live, making the
-<code>autoregister_laminas</code> flag useless for versions starting with 2.5.0; it will
-only register the laminas-loader path!</p>
-<p>If you are using this feature, you should update your code. We recommend
-using <a href="https://getcomposer.org">Composer</a>'s autoloader for autoloading
-Laminas classes.</p>
-</blockquote>
-<h2 id="available-methods">Available Methods</h2>
-<h3>__construct</h3>
-<pre class=codehilite><code class=language-php>__construct(array|Traversable $options = null) : void</code></pre>
-<p>Create a new instance of the object.</p>
-<p>If <code>$options</code> is non-null, the argument is passed to
-<a href="#setoptions">setOptions()</a>.</p>
-<h3>setOptions</h3>
-<pre class=codehilite><code class=language-php>setOptions(array|Traversable $options) : void</code></pre>
-<p>Set object state based on provided options.</p>
-<p>Recognized keys are detailed under <a href="#configuration-options">Configuration options</a>,
-with the following behaviors:</p>
-<ul>
-<li>The <code>namespaces</code> value will be passed to
-  <a href="#registernamespaces">registerNamespaces()</a>.</li>
-<li>The <code>prefixes</code> value will be passed to
-  <a href="#registerprefixes">registerPrefixes()</a>.</li>
-<li>The <code>fallback_autoloader</code> value will be passed to
-  <a href="#setfallbackautoloader">setFallbackAutoloader()</a>.</li>
-</ul>
-<h3>setFallbackAutoloader</h3>
-<pre class=codehilite><code class=language-php>setFallbackAutoloader(bool $flag) : void</code></pre>
-<p>Takes a boolean flag indicating whether or not to act as a fallback autoloader
-when registered with the SPL autoloader.</p>
-<h3>isFallbackAutoloader</h3>
-<pre class=codehilite><code class=language-php>isFallbackAutoloader() : bool</code></pre>
-<p>Indicates whether or not this instance is flagged as a fallback autoloader.</p>
-<h3>registerNamespace</h3>
-<pre class=codehilite><code class=language-php>registerNamespace(string $namespace, string $directory) : void</code></pre>
-<p>Register a namespace with the autoloader, pointing it to a specific directory on
-the filesystem for class resolution. For classes matching that initial
-namespace, the autoloader will then perform lookups within that directory.</p>
-<h3>registerNamespaces</h3>
-<pre class=codehilite><code class=language-php>registerNamespaces(array|Traversable $namespaces) : void</code></pre>
-<p>Register multiple namespaces with the autoloader, iterating through
-<code>$namespaces</code> and passing each key and item to <a href="#registernamespace">registerNamespace()</a>.</p>
-<h3>registerPrefix</h3>
-<pre class=codehilite><code class=language-php>registerPrefix(string $prefix, string $directory) : void</code></pre>
-<p>Register a vendor prefix with the autoloader, pointing it to a specific
-directory on the filesystem for class resolution. For classes matching that
-initial vendor prefix, the autoloader will then perform lookups within that
-directory.</p>
-<h3>registerPrefixes</h3>
-<pre class=codehilite><code class=language-php>registerPrefixes(array|Traversable $prefixes) : void</code></pre>
-<p>Register many vendor prefixes with the autoloader, traversing <code>$prefixes</code> and
-passing each key/value pair to <a href="#registerprefix">registerPrefix()</a>.</p>
-<h3>autoload</h3>
-<pre class=codehilite><code class=language-php>autoload(string $class) : false|string</code></pre>
-<p>Attempts to load the class specified. Returns a boolean <code>false</code> on failure, or a
-string indicating the class loaded on success.</p>
-<h3>register</h3>
-<pre class=codehilite><code class=language-php>register() : void</code></pre>
-<p>Registers the <code>autoload()</code> method of the current instance with
-<code>spl_autoload_register()</code>.</p>
+<a href="../." class="btn btn-default" role="button">Go to homepage</a>
 
 
-
-
-    <nav>
-    <ul class="page-nav hidden-print">
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="prev" class="page-nav__link page-nav__link--prev" href="../autoloader-factory/">
-                    <i class="fa fa-chevron-left"></i> Previous
-                </a>
-            
-        </li>
-
-        
-        <li class="page-nav__item">
-            
-                <a rel="next" class="page-nav__link page-nav__link--next" href="../class-map-autoloader/">
-                    Next <i class="fa fa-chevron-right"></i>
-                </a>
-            
-        </li>
-    </ul>
-</nav>
-
-
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-loader/edit/master/docs/book/standard-autoloader.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
-
-                
             </div>
             <div class="col-md-3 col-sm-12 sidebar">
                 
@@ -474,7 +224,7 @@ string indicating the class loaded on success.</p>
                     
     <div class="subnavigation hidden-print">
         <h4 class="subnavigation__title">
-            <a href="..">laminas-loader</a>
+            <a href="../.">laminas-loader</a>
         </h4>
 
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
@@ -499,8 +249,8 @@ string indicating the class loaded on success.</p>
 
                                     
                                         
-    <li class="subnavigation__list-item subnavigation__list-item--active">
-        <a href="./" class="subnavigation__link">StandardAutoloader</a>
+    <li class="subnavigation__list-item ">
+        <a href="../standard-autoloader/" class="subnavigation__link">StandardAutoloader</a>
     </li>
 
                                     
