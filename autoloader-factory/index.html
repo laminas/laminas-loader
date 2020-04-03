@@ -324,7 +324,7 @@ for 3rd party libraries. The factory uses configuration, allowing you to cache
 your autoloader definitions or define them centrally for your application.</p>
 <h2 id="quick-start">Quick Start</h2>
 <p>The <code>AutoloaderFactory</code> expects an array of configuration.</p>
-<pre class=codehilite><code class=language-php>$config = [
+<pre class="highlight"><code class="language-php">$config = [
     'Laminas\Loader\ClassMapAutoloader' =&gt; [
         'application' =&gt; APPLICATION_PATH . '/.classmap.php',
         'laminas'          =&gt; APPLICATION_PATH . '/../library/Laminas/.classmap.php',
@@ -336,12 +336,14 @@ your autoloader definitions or define them centrally for your application.</p>
         ],
     ],
 ];</code></pre>
+
 <p>Once you have your configuration in a PHP array, pass it to the
 <code>AutoloaderFactory</code>:</p>
-<pre class=codehilite><code class=language-php>// This example assumes that the AutoloaderFactory is itself autoloadable!
+<pre class="highlight"><code class="language-php">// This example assumes that the AutoloaderFactory is itself autoloadable!
 use Laminas\Loader\AutoloaderFactory;
 
 AutoloaderFactory::factory($config);</code></pre>
+
 <p>The <code>AutoloaderFactory</code> will instantiate each autoloader with the given options,
 and also call its <code>register()</code> method to register it with the SPL autoloader.</p>
 <h2 id="configuration-options">Configuration options</h2>
@@ -355,30 +357,35 @@ If the class is not found, or does not implement the
 <a href="../spl-autoloader/">SplAutoloader</a> interface, an exception will be raised.</p>
 <h2 id="available-methods">Available methods</h2>
 <h3>factory</h3>
-<pre class=codehilite><code class=language-php>static factory(array|Traversable $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">static factory(array|Traversable $options) : void</code></pre>
+
 <p>Instantiate and register autoloaders.</p>
 <p>This method is <strong>static</strong>, and is used to instantiate autoloaders and register them
 with the SPL autoloader. It expects either an array or <code>Traversable</code> object as denoted in the
 <a href="#configuration options">options section</a>.</p>
 <h3>getRegisteredAutoloaders</h3>
-<pre class=codehilite><code class=language-php>static getRegisteredAutoloaders() : SplAutoloader[]</code></pre>
+<pre class="highlight"><code class="language-php">static getRegisteredAutoloaders() : SplAutoloader[]</code></pre>
+
 <p>Retrieve a list of all autoloaders registered using the factory.</p>
 <p>This method is <strong>static</strong>, and may be used to retrieve a list of all autoloaders
 registered via the <code>factory()</code> method. It returns an array of <code>SplAutoloader</code>
 instances.</p>
 <h3>getRegisteredAutoloader</h3>
-<pre class=codehilite><code class=language-php>static getRegisteredAutoloader($class) : SplAutoloader</code></pre>
+<pre class="highlight"><code class="language-php">static getRegisteredAutoloader($class) : SplAutoloader</code></pre>
+
 <p>Retrieve an autoloader by class name.</p>
 <p>This method is <strong>static</strong>, and is used to retrieve a specific autoloader by
 class name. If the autoloader is not registered, an exception will be thrown.</p>
 <h3>unregisterAutoloaders</h3>
-<pre class=codehilite><code class=language-php>static unregisterAutoloaders() : void</code></pre>
+<pre class="highlight"><code class="language-php">static unregisterAutoloaders() : void</code></pre>
+
 <p>Unregister all autoloaders registered via the factory.</p>
 <p>This method is <strong>static</strong>, and can be used to unregister all autoloaders that
 were registered via the factory. Note that this will <strong>not</strong> unregister
 autoloaders that were registered outside of the factory.</p>
 <h3>unregisterAutoloader</h3>
-<pre class=codehilite><code class=language-php>static unregisterAutoloader($class) : bool</code></pre>
+<pre class="highlight"><code class="language-php">static unregisterAutoloader($class) : bool</code></pre>
+
 <p>Unregister an autoloader registered via the factory.</p>
 <p>This method is <strong>static</strong>, and can be used to unregister an autoloader that was
 registered via the factory. Note that this will <strong>not</strong> unregister autoloaders

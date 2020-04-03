@@ -329,7 +329,7 @@ method for registering with the SPL autoloading mechanism.</p>
 section</a>). As an example, consider the following autoloader,
 which will look for a class file named after the class within a list of
 registered directories.</p>
-<pre class=codehilite><code class=language-php>namespace Custom;
+<pre class="highlight"><code class="language-php">namespace Custom;
 
 use InvalidArgumentException;
 use Traversable;
@@ -376,36 +376,42 @@ class ModifiedIncludePathAutoloader implements SplAutoloader
         spl_autoload_register([$this, 'autoload']);
     }
 }</code></pre>
+
 <p>To use this <code>ModifiedIncludePathAutoloader</code> from the previous example:</p>
-<pre class=codehilite><code class=language-php>$options = [
+<pre class="highlight"><code class="language-php">$options = [
    '/path/one',
    '/path/two',
 ];
 $autoloader = new Custom\ModifiedIncludePathAutoloader($options);
 $autoloader-&gt;register();</code></pre>
+
 <h2 id="configuration-options">Configuration Options</h2>
 <p>This component defines no configuration options, as it is an interface.</p>
 <h2 id="available-methods">Available Methods</h2>
 <h3>__construct</h3>
-<pre class=codehilite><code class=language-php>__construct($options = null) : void</code></pre>
+<pre class="highlight"><code class="language-php">__construct($options = null) : void</code></pre>
+
 <p>Autoloader constructors should optionally receive configuration. Typically, if
 received, these will be passed to the <code>setOptions()</code> method to process.</p>
 <h3>setOptions</h3>
-<pre class=codehilite><code class=language-php>setOptions(array|Traversable $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">setOptions(array|Traversable $options) : void</code></pre>
+
 <p>Used to configure the autoloader. Typically, it should expect either an array or
 a <code>Traversable</code> object, though validation of the options is left to
 implementation.</p>
 <h3>autoload</h3>
-<pre class=codehilite><code class=language-php>autoload(string $class) : false|string</code></pre>
+<pre class="highlight"><code class="language-php">autoload(string $class) : false|string</code></pre>
+
 <p>This method should be used to resolve a class name to the file defining it. When
 a positive match is found, return the class name; otherwise, return a boolean
 <code>false</code>.</p>
 <h3>register</h3>
-<pre class=codehilite><code class=language-php>register() : void</code></pre>
+<pre class="highlight"><code class="language-php">register() : void</code></pre>
+
 <p>Should be used to register the autoloader instance with
 <code>spl_autoload_register()</code>. Invariably, the method should look like the
 following:</p>
-<pre class=codehilite><code class=language-php>public function register()
+<pre class="highlight"><code class="language-php">public function register()
 {
     spl_autoload_register([$this, 'autoload']);
 }</code></pre>

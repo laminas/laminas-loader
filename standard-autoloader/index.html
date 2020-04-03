@@ -326,11 +326,12 @@
 autoloader. It assumes a 1:1 mapping of the namespace+classname to the
 filesystem, wherein namespace separators and underscores are translated to
 directory separators. The following statement illustrates how resolution works:</p>
-<pre class=codehilite><code class=language-php>$filename = str_replace(
+<pre class="highlight"><code class="language-php">$filename = str_replace(
     ['_', '\\'],
     DIRECTORY_SEPARATOR,
     $classname
 ) . '.php';</code></pre>
+
 <p>The <code>StandardAutoloader</code> requires that you explicitly register namespace/path
 pairs (or vendor prefix/path pairs), and will only load a file if it exists
 within the given path. Multiple pairs may be provided.</p>
@@ -359,23 +360,24 @@ This can either be done at instantiation, or via explicit method calls after the
 object has been initialized.  Calling <code>register()</code> will register the autoloader
 with the SPL autoloader registry.</p>
 <h3>Manual Configuration</h3>
-<pre class=codehilite><code class=language-php>use Laminas\Loader\StandardAutoloader;
+<pre class="highlight"><code class="language-php">use Laminas\Loader\StandardAutoloader;
 
 // This example assumes the StandardAutoloader is autoloadable.
 $loader = new StandardAutoloader();
 
-// Register the &quot;Phly&quot; namespace:
+// Register the "Phly" namespace:
 $loader-&gt;registerNamespace('Phly', APPLICATION_PATH . '/../library/Phly');
 
-// Register the &quot;Scapi&quot; vendor prefix:
+// Register the "Scapi" vendor prefix:
 $loader-&gt;registerPrefix('Scapi', APPLICATION_PATH . '/../library/Scapi');
 
-// Optionally, specify the autoloader as a &quot;fallback&quot; autoloader;
+// Optionally, specify the autoloader as a "fallback" autoloader;
 // this is not recommended.
 $loader-&gt;setFallbackAutoloader(true);
 
 // Register with spl_autoload:
 $loader-&gt;register();</code></pre>
+
 <h3>Configuration at Instantiation</h3>
 <p>The <code>StandardAutoloader</code> may also be configured at instantiation. Please note:</p>
 <ul>
@@ -384,7 +386,7 @@ $loader-&gt;register();</code></pre>
   <code>setOptions()</code> method.</li>
 </ul>
 <p>The following is equivalent to the previous example.</p>
-<pre class=codehilite><code class=language-php>use Laminas\Loader\StandardAutoloader;
+<pre class="highlight"><code class="language-php">use Laminas\Loader\StandardAutoloader;
 
 $loader = new StandardAutoloader([
     'namespaces' =&gt; [
@@ -398,6 +400,7 @@ $loader = new StandardAutoloader([
 
 // Register with spl_autoload:
 $loader-&gt;register();</code></pre>
+
 <h2 id="configuration-options">Configuration Options</h2>
 <p>The <code>StandardAutoloader</code> defines the following options.</p>
 <h3>namespaces</h3>
@@ -428,12 +431,14 @@ Laminas classes.</p>
 </blockquote>
 <h2 id="available-methods">Available Methods</h2>
 <h3>__construct</h3>
-<pre class=codehilite><code class=language-php>__construct(array|Traversable $options = null) : void</code></pre>
+<pre class="highlight"><code class="language-php">__construct(array|Traversable $options = null) : void</code></pre>
+
 <p>Create a new instance of the object.</p>
 <p>If <code>$options</code> is non-null, the argument is passed to
 <a href="#setoptions">setOptions()</a>.</p>
 <h3>setOptions</h3>
-<pre class=codehilite><code class=language-php>setOptions(array|Traversable $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">setOptions(array|Traversable $options) : void</code></pre>
+
 <p>Set object state based on provided options.</p>
 <p>Recognized keys are detailed under <a href="#configuration-options">Configuration options</a>,
 with the following behaviors:</p>
@@ -446,37 +451,45 @@ with the following behaviors:</p>
   <a href="#setfallbackautoloader">setFallbackAutoloader()</a>.</li>
 </ul>
 <h3>setFallbackAutoloader</h3>
-<pre class=codehilite><code class=language-php>setFallbackAutoloader(bool $flag) : void</code></pre>
+<pre class="highlight"><code class="language-php">setFallbackAutoloader(bool $flag) : void</code></pre>
+
 <p>Takes a boolean flag indicating whether or not to act as a fallback autoloader
 when registered with the SPL autoloader.</p>
 <h3>isFallbackAutoloader</h3>
-<pre class=codehilite><code class=language-php>isFallbackAutoloader() : bool</code></pre>
+<pre class="highlight"><code class="language-php">isFallbackAutoloader() : bool</code></pre>
+
 <p>Indicates whether or not this instance is flagged as a fallback autoloader.</p>
 <h3>registerNamespace</h3>
-<pre class=codehilite><code class=language-php>registerNamespace(string $namespace, string $directory) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerNamespace(string $namespace, string $directory) : void</code></pre>
+
 <p>Register a namespace with the autoloader, pointing it to a specific directory on
 the filesystem for class resolution. For classes matching that initial
 namespace, the autoloader will then perform lookups within that directory.</p>
 <h3>registerNamespaces</h3>
-<pre class=codehilite><code class=language-php>registerNamespaces(array|Traversable $namespaces) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerNamespaces(array|Traversable $namespaces) : void</code></pre>
+
 <p>Register multiple namespaces with the autoloader, iterating through
 <code>$namespaces</code> and passing each key and item to <a href="#registernamespace">registerNamespace()</a>.</p>
 <h3>registerPrefix</h3>
-<pre class=codehilite><code class=language-php>registerPrefix(string $prefix, string $directory) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerPrefix(string $prefix, string $directory) : void</code></pre>
+
 <p>Register a vendor prefix with the autoloader, pointing it to a specific
 directory on the filesystem for class resolution. For classes matching that
 initial vendor prefix, the autoloader will then perform lookups within that
 directory.</p>
 <h3>registerPrefixes</h3>
-<pre class=codehilite><code class=language-php>registerPrefixes(array|Traversable $prefixes) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerPrefixes(array|Traversable $prefixes) : void</code></pre>
+
 <p>Register many vendor prefixes with the autoloader, traversing <code>$prefixes</code> and
 passing each key/value pair to <a href="#registerprefix">registerPrefix()</a>.</p>
 <h3>autoload</h3>
-<pre class=codehilite><code class=language-php>autoload(string $class) : false|string</code></pre>
+<pre class="highlight"><code class="language-php">autoload(string $class) : false|string</code></pre>
+
 <p>Attempts to load the class specified. Returns a boolean <code>false</code> on failure, or a
 string indicating the class loaded on success.</p>
 <h3>register</h3>
-<pre class=codehilite><code class=language-php>register() : void</code></pre>
+<pre class="highlight"><code class="language-php">register() : void</code></pre>
+
 <p>Registers the <code>autoload()</code> method of the current instance with
 <code>spl_autoload_register()</code>.</p>
 

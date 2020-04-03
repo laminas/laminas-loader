@@ -323,7 +323,7 @@ entire map.</p>
 <h2 id="quick-start">Quick Start</h2>
 <p>Classes implementing the <code>PluginClassLocator</code> must implement the following three
 methods:</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Loader;
+<pre class="highlight"><code class="language-php">namespace Laminas\Loader;
 
 interface PluginClassLocator
 {
@@ -331,19 +331,23 @@ interface PluginClassLocator
     public function unregisterPlugin($shortName);
     public function getRegisteredPlugins();
 }</code></pre>
+
 <h2 id="configuration-options">Configuration Options</h2>
 <p>This component defines no configuration options, as it is an interface.</p>
 <h2 id="available-methods">Available Methods</h2>
 <h3>registerPlugin</h3>
-<pre class=codehilite><code class=language-php>registerPlugin(string $shortName, string $className) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerPlugin(string $shortName, string $className) : void</code></pre>
+
 <p>Implement this method to add or overwrite plugin name/class name associations in
 the internal plugin map. <code>$shortName</code> will be aliased to <code>$className</code>.</p>
 <h3>unregisterPlugin</h3>
-<pre class=codehilite><code class=language-php>unregisterPlugin(string $shortName) : void</code></pre>
+<pre class="highlight"><code class="language-php">unregisterPlugin(string $shortName) : void</code></pre>
+
 <p>Implement this to allow removing an existing plugin mapping corresponding to
 <code>$shortName</code>.</p>
 <h3>getRegisteredPlugins</h3>
-<pre class=codehilite><code class=language-php>getRegisteredPlugins() : array</code></pre>
+<pre class="highlight"><code class="language-php">getRegisteredPlugins() : array</code></pre>
+
 <p>Implement this to allow returning the plugin name/class name map.</p>
 
 

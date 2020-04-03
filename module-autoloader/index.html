@@ -338,43 +338,52 @@ documentation.</p>
 a path to scan for modules, or a key/value pair of explicit module paths. In the
 case of explicit module paths, the key is the module's name, and the value is
 the path to that module.</p>
-<pre class=codehilite><code class=language-php>$options = [
+<pre class="highlight"><code class="language-php">$options = [
     '/path/to/modules',
     '/path/to/other/modules',
     'MyModule' =&gt; '/explicit/path/mymodule-v1.2'
 ];</code></pre>
+
 <h2 id="available-methods">Available Methods</h2>
 <h3>__construct</h3>
-<pre class=codehilite><code class=language-php>__construct(array|Traversable $options = null) : void</code></pre>
+<pre class="highlight"><code class="language-php">__construct(array|Traversable $options = null) : void</code></pre>
+
 <p>Initialize and configure the object; if <code>$options</code> are provided, they will be
 passed to <a href="#setoptions">setOptions()</a>.</p>
 <h3>setOptions</h3>
-<pre class=codehilite><code class=language-php>setOptions(array|Traversable $options) : void</code></pre>
+<pre class="highlight"><code class="language-php">setOptions(array|Traversable $options) : void</code></pre>
+
 <p>Configures the state of the autoloader, registering paths to modules. <code>$options</code>
 will be passed to <a href="#registerpaths">registerPaths()</a>.</p>
 <h3>autoload</h3>
-<pre class=codehilite><code class=language-php>autoload(string $class) : false|string</code></pre>
+<pre class="highlight"><code class="language-php">autoload(string $class) : false|string</code></pre>
+
 <p>Attempts to load the specified <code>Module</code> class. Returns a boolean <code>false</code> on
 failure, or a string indicating the class loaded on success.</p>
 <h3>register</h3>
-<pre class=codehilite><code class=language-php>register() : void</code></pre>
+<pre class="highlight"><code class="language-php">register() : void</code></pre>
+
 <p>Registers the <code>autoload()</code> method of the current instance with
 <code>spl_autoload_register()</code>.</p>
 <h3>unregister</h3>
-<pre class=codehilite><code class=language-php>unregister() : void</code></pre>
+<pre class="highlight"><code class="language-php">unregister() : void</code></pre>
+
 <p>Unregisters the <code>autoload()</code> method of the current instance with
 <code>spl_autoload_unregister()</code>.</p>
 <h3>registerPaths</h3>
-<pre class=codehilite><code class=language-php>registerPaths(array|Traversable $paths) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerPaths(array|Traversable $paths) : void</code></pre>
+
 <p>Register paths to modules. For an example array, please see the
 <a href="#configuration-options">Configuration options</a> section.</p>
 <h3>registerPath</h3>
-<pre class=codehilite><code class=language-php>registerPath(string $path, string $moduleName = false) : void</code></pre>
+<pre class="highlight"><code class="language-php">registerPath(string $path, string $moduleName = false) : void</code></pre>
+
 <p>Register a single path with the autoloader. The first parameter, <code>$path</code>, is
 expected to be a string. The second parameter, <code>$moduleName</code>, is expected to be
 a module name, which allows for registering an explicit path to that module.</p>
 <h3>getPaths</h3>
-<pre class=codehilite><code class=language-php>getPaths() : string[]</code></pre>
+<pre class="highlight"><code class="language-php">getPaths() : string[]</code></pre>
+
 <p>Returns an array of all the paths registered.</p>
 
 

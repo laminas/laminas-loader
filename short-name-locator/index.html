@@ -334,7 +334,7 @@ strategies defined by other interfaces, such as
 <a href="../plugin-class-locator/">PluginClassLocator</a>.</p>
 <h2 id="quick-start">Quick Start</h2>
 <p>Implementing a <code>ShortNameLocator</code> requires defining three methods, as shown below.</p>
-<pre class=codehilite><code class=language-php>namespace Laminas\Loader;
+<pre class="highlight"><code class="language-php">namespace Laminas\Loader;
 
 interface ShortNameLocator
 {
@@ -342,18 +342,22 @@ interface ShortNameLocator
     public function getClassName($name);
     public function load($name);
 }</code></pre>
+
 <h2 id="configuration-options">Configuration Options</h2>
 <p>This component defines no configuration options, as it is an interface.</p>
 <h2 id="available-methods">Available Methods</h2>
 <h3>isLoaded</h3>
-<pre class=codehilite><code class=language-php>isLoaded(string $name) : bool</code></pre>
+<pre class="highlight"><code class="language-php">isLoaded(string $name) : bool</code></pre>
+
 <p>Implement this method to return a boolean indicating whether or not the class
 has been able to resolve the plugin name to a class.</p>
 <h3>getClassName</h3>
-<pre class=codehilite><code class=language-php>getClassName(string $name) : string</code></pre>
+<pre class="highlight"><code class="language-php">getClassName(string $name) : string</code></pre>
+
 <p>Implement this method to return the class name associated with a plugin name.</p>
 <h3>load</h3>
-<pre class=codehilite><code class=language-php>load($name) : string|false</code></pre>
+<pre class="highlight"><code class="language-php">load($name) : string|false</code></pre>
+
 <p>This method should resolve a plugin name to a class name.</p>
 
 
