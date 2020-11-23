@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ClassMapAutoloaderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // Store original autoloaders
         $this->loaders = spl_autoload_functions();
@@ -33,7 +33,7 @@ class ClassMapAutoloaderTest extends TestCase
         $this->loader = new ClassMapAutoloader();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Restore original autoloaders
         $loaders = spl_autoload_functions();
@@ -92,13 +92,13 @@ class ClassMapAutoloaderTest extends TestCase
     {
         $this->loader->registerAutoloadMap(__DIR__ . '/_files/goodmap.php');
         $map = $this->loader->getAutoloadMap();
-        $this->assertInternalType('array', $map);
+        $this->assertIsArray($map);
         $this->assertCount(2, $map);
         // Just to make sure nothing changes after loading the same map again
         // (loadMapFromFile should just return)
         $this->loader->registerAutoloadMap(__DIR__ . '/_files/goodmap.php');
         $map = $this->loader->getAutoloadMap();
-        $this->assertInternalType('array', $map);
+        $this->assertIsArray($map);
         $this->assertCount(2, $map);
     }
 
@@ -114,7 +114,7 @@ class ClassMapAutoloaderTest extends TestCase
         $this->loader->registerAutoloadMap(__DIR__ . '/_files/goodmap.php');
 
         $test = $this->loader->getAutoloadMap();
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertCount(3, $test);
         $this->assertNotEquals(
             $map['LaminasTest\Loader\StandardAutoloaderTest'],
@@ -133,7 +133,7 @@ class ClassMapAutoloaderTest extends TestCase
         $maps = [$map, __DIR__ . '/_files/goodmap.php'];
         $this->loader->registerAutoloadMaps($maps);
         $test = $this->loader->getAutoloadMap();
-        $this->assertInternalType('array', $test);
+        $this->assertIsArray($test);
         $this->assertCount(3, $test);
     }
 
@@ -145,7 +145,7 @@ class ClassMapAutoloaderTest extends TestCase
                 $this->loader->registerAutoloadMaps($test);
                 $this->fail('Should not register non-traversable arguments');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('array or implement Traversable', $e->getMessage());
+                $this->assertStringContainsString('array or implement Traversable', $e->getMessage());
             }
         }
     }

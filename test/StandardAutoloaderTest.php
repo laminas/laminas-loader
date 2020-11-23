@@ -18,7 +18,7 @@ use ReflectionClass;
  */
 class StandardAutoloaderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // Store original autoloaders
         $this->loaders = spl_autoload_functions();
@@ -32,7 +32,7 @@ class StandardAutoloaderTest extends TestCase
         $this->includePath = get_include_path();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Restore original autoloaders
         $loaders = spl_autoload_functions();
@@ -75,7 +75,7 @@ class StandardAutoloaderTest extends TestCase
                 $loader->setOptions(true);
                 $this->fail('Setting options with invalid type should fail');
             } catch (InvalidArgumentException $e) {
-                $this->assertContains('array or Traversable', $e->getMessage());
+                $this->assertStringContainsString('array or Traversable', $e->getMessage());
             }
         }
     }
@@ -177,19 +177,24 @@ class StandardAutoloaderTest extends TestCase
     public function testLaminasNamespaceIsNotLoadedByDefault()
     {
         $loader = new StandardAutoloader();
+        $r = new ReflectionClass($loader);
+        $namespacesProperty = $r->getProperty('namespaces');
+        $namespacesProperty->setAccessible(true);
         $expected = [];
-        $this->assertAttributeEquals($expected, 'namespaces', $loader);
+        $this->assertEquals($expected, $namespacesProperty->getValue($loader));
     }
 
     public function testCanTellAutoloaderToRegisterLaminasNamespaceAtInstantiation()
     {
         $loader = new StandardAutoloader(['autoregister_laminas' => true]);
-        $r      = new ReflectionClass($loader);
-        $file   = $r->getFileName();
+        $r = new ReflectionClass($loader);
+        $namespacesProperty = $r->getProperty('namespaces');
+        $namespacesProperty->setAccessible(true);
+        $file = $r->getFileName();
         $expected = [
             'Laminas\\'    => dirname(dirname($file)) . DIRECTORY_SEPARATOR,
         ];
-        $this->assertAttributeEquals($expected, 'namespaces', $loader);
+        $this->assertEquals($expected, $namespacesProperty->getValue($loader));
     }
 
     public function testWillLoopThroughAllNamespacesUntilMatchIsFoundWhenAutoloading()

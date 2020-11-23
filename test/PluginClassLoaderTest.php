@@ -20,7 +20,7 @@ class PluginClassLoaderTest extends TestCase
     /** @var PluginClassLoader */
     public $loader;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Clear any static maps
         PluginClassLoader::addStaticMap(null);
