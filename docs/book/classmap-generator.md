@@ -1,7 +1,8 @@
 # The Class Map Generator utility: bin/classmap\_generator.php
 
+<!-- <!-- markdownlint-disable-next-line MD001 -->
 > ### Removed functionality
-> 
+>
 > The script `bin/classmap_generator.php` has been removed and is no longer available.
 > Instead, we recommend using [Composer for autoloading](https://getcomposer.org/doc/04-schema.md#autoload).
 
