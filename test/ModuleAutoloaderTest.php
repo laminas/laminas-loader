@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ModuleAutoloaderTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // Store original autoloaders
         $this->loaders = spl_autoload_functions();
@@ -28,7 +28,7 @@ class ModuleAutoloaderTest extends TestCase
         $this->includePath = get_include_path();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // Restore original autoloaders
         $loaders = spl_autoload_functions();

@@ -18,7 +18,7 @@ use ReflectionClass;
  */
 class AutoloaderFactoryTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         // Store original autoloaders
         $this->loaders = spl_autoload_functions();
@@ -32,7 +32,7 @@ class AutoloaderFactoryTest extends TestCase
         $this->includePath = get_include_path();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         AutoloaderFactory::unregisterAutoloaders();
         // Restore original autoloaders
@@ -60,18 +60,17 @@ class AutoloaderFactoryTest extends TestCase
         ]);
         $loader = AutoloaderFactory::getRegisteredAutoloader('Laminas\Loader\ClassMapAutoloader');
         $map = $loader->getAutoloadMap();
-        $this->assertInternalType('array', $map);
+        $this->assertIsArray($map);
         $this->assertCount(2, $map);
     }
 
     /**
      * This tests checks if invalid autoloaders cause exceptions
-     *
-     * @expectedException InvalidArgumentException
      */
     public function testFactoryCatchesInvalidClasses()
     {
         include __DIR__ . '/_files/InvalidInterfaceAutoloader.php';
+        $this->expectException(InvalidArgumentException::class);
         AutoloaderFactory::factory([
             'InvalidInterfaceAutoloader' => []
         ]);
