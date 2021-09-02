@@ -1,16 +1,22 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-loader for the canonical source repository
- * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Loader;
 
 use Laminas\Loader\ClassMapAutoloader;
 use Laminas\Loader\Exception\InvalidArgumentException;
+use LaminasTest\Loader\StandardAutoloaderTest;
 use PHPUnit\Framework\TestCase;
+use stdClass;
+
+use function array_shift;
+use function class_exists;
+use function count;
+use function get_include_path;
+use function is_array;
+use function set_include_path;
+use function spl_autoload_functions;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
 
 /**
  * @group      Loader
@@ -84,7 +90,7 @@ class ClassMapAutoloaderTest extends TestCase
             // @codingStandardsIgnoreEnd
         ];
         $loader = new ClassMapAutoloader([$map]);
-        $test = $loader->getAutoloadMap();
+        $test   = $loader->getAutoloadMap();
         $this->assertSame($map, $test);
     }
 
@@ -108,7 +114,7 @@ class ClassMapAutoloaderTest extends TestCase
             // @codingStandardsIgnoreStart
             'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
-            'LaminasTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
+            StandardAutoloaderTest::class => 'some/bogus/path.php',
         ];
         $this->loader->registerAutoloadMap($map);
         $this->loader->registerAutoloadMap(__DIR__ . '/_files/goodmap.php');
@@ -117,18 +123,18 @@ class ClassMapAutoloaderTest extends TestCase
         $this->assertIsArray($test);
         $this->assertCount(3, $test);
         $this->assertNotEquals(
-            $map['LaminasTest\Loader\StandardAutoloaderTest'],
-            $test['LaminasTest\Loader\StandardAutoloaderTest']
+            $map[StandardAutoloaderTest::class],
+            $test[StandardAutoloaderTest::class]
         );
     }
 
     public function testCanRegisterMultipleMapsAtOnce()
     {
-        $map = [
+        $map  = [
             // @codingStandardsIgnoreStart
             'Laminas\Loader\Exception\ExceptionInterface' => __DIR__ . '/../../../library/Laminas/Loader/Exception/ExceptionInterface.php',
             // @codingStandardsIgnoreEnd
-            'LaminasTest\Loader\StandardAutoloaderTest' => 'some/bogus/path.php',
+            StandardAutoloaderTest::class => 'some/bogus/path.php',
         ];
         $maps = [$map, __DIR__ . '/_files/goodmap.php'];
         $this->loader->registerAutoloadMaps($maps);
@@ -139,7 +145,7 @@ class ClassMapAutoloaderTest extends TestCase
 
     public function testRegisterMapsThrowsExceptionForNonTraversableArguments()
     {
-        $tests = [true, 'string', 1, 1.0, new \stdClass];
+        $tests = [true, 'string', 1, 1.0, new stdClass()];
         foreach ($tests as $test) {
             try {
                 $this->loader->registerAutoloadMaps($test);
