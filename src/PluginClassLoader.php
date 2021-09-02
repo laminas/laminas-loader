@@ -1,16 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-loader for the canonical source repository
- * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
- */
-
 namespace Laminas\Loader;
 
 use ArrayIterator;
 use IteratorAggregate;
 use Traversable;
+
+use function array_key_exists;
+use function class_exists;
+use function is_array;
+use function is_int;
+use function is_numeric;
+use function is_object;
+use function is_string;
+use function strtolower;
 
 /**
  * Plugin class locator interface
@@ -19,12 +22,14 @@ class PluginClassLoader implements PluginClassLocator
 {
     /**
      * List of plugin name => class name pairs
+     *
      * @var array
      */
     protected $plugins = [];
 
     /**
      * Static map allow global seeding of plugin loader
+     *
      * @var array
      */
     protected static $staticMap = [];
@@ -107,7 +112,7 @@ class PluginClassLoader implements PluginClassLocator
             if (! class_exists($map)) {
                 throw new Exception\InvalidArgumentException('Map class provided is invalid');
             }
-            $map = new $map;
+            $map = new $map();
         }
         if (is_array($map)) {
             $map = new ArrayIterator($map);

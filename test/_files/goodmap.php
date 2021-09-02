@@ -1,4 +1,5 @@
 <?php
+
 $ds       = DIRECTORY_SEPARATOR;
 $basePath = realpath(__DIR__ . "$ds..");
 return array(

@@ -1,16 +1,23 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-loader for the canonical source repository
- * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Loader;
 
+use FooModule\Module;
 use InvalidArgumentException;
 use Laminas\Loader\ModuleAutoloader;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+
+use function class_exists;
+use function extension_loaded;
+use function get_include_path;
+use function is_array;
+use function set_include_path;
+use function spl_autoload_functions;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
+
+use const DIRECTORY_SEPARATOR;
 
 class ModuleAutoloaderTest extends TestCase
 {
@@ -48,20 +55,20 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testCanRegisterPathsFromConstructor()
     {
-        $paths = [__DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR];
-        $loader = new ModuleAutoloader($paths);
+        $paths           = [__DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR];
+        $loader          = new ModuleAutoloader($paths);
         $registeredPaths = $loader->getPaths();
         $this->assertSame($paths, $registeredPaths);
     }
 
     public function testPathsNormalizedWithTrailingSlash()
     {
-        $paths = [
+        $paths           = [
             __DIR__ . DIRECTORY_SEPARATOR . '_files',
             __DIR__ . DIRECTORY_SEPARATOR . '_files///',
             __DIR__ . DIRECTORY_SEPARATOR . '_files\\\\',
         ];
-        $loader = new ModuleAutoloader($paths);
+        $loader          = new ModuleAutoloader($paths);
         $registeredPaths = $loader->getPaths();
         $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $registeredPaths[0]);
         $this->assertSame(__DIR__ . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR, $registeredPaths[1]);
@@ -70,27 +77,27 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testCanAutoloadModule()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $moduleClass = $loader->autoload('FooModule\Module');
         $this->assertSame('FooModule\Module', $moduleClass);
-        $module = new \FooModule\Module;
+        $module = new Module();
         $this->assertInstanceOf('FooModule\Module', $module);
     }
 
     public function testCanAutoloadSubModule()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $loader->register();
-        $subModule = new \FooModule\SubModule\Module;
+        $subModule = new \FooModule\SubModule\Module();
         $this->assertInstanceOf('FooModule\SubModule\Module', $subModule);
         $loader->unregister();
     }
 
     public function testCanAutoloadPharModules()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $loader->register();
 
@@ -134,9 +141,9 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testCanAutoloadModulesFromWithinExecutedPhar()
     {
-        $loader   = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
 
-        $class    = new \ReflectionClass('Laminas\Loader\ModuleAutoloader');
+        $class    = new ReflectionClass(ModuleAutoloader::class);
         $property = $class->getProperty("pharBasePath");
         $property->setAccessible(true);
         $property->setValue($loader, 'phar://' . __DIR__ . '/_files/ApplicationModulePhar.phar');
@@ -148,15 +155,15 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testProvidesFluidInterface()
     {
-        $loader = new ModuleAutoloader;
-        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->setOptions(['foo']));
-        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->registerPaths(['foo']));
-        $this->assertInstanceOf('Laminas\Loader\ModuleAutoloader', $loader->registerPath('foo'));
+        $loader = new ModuleAutoloader();
+        $this->assertInstanceOf(ModuleAutoloader::class, $loader->setOptions(['foo']));
+        $this->assertInstanceOf(ModuleAutoloader::class, $loader->registerPaths(['foo']));
+        $this->assertInstanceOf(ModuleAutoloader::class, $loader->registerPath('foo'));
     }
 
     public function testReturnsFalseForNonModuleClass()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $moduleClass = $loader->autoload('FooModule\NotModule');
         $this->assertFalse($moduleClass);
@@ -164,7 +171,7 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testReturnsFalseForNonExistantModuleClass()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $moduleClass = $loader->autoload('NonExistantModule\Module');
         $this->assertFalse($moduleClass);
@@ -177,7 +184,7 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testReturnsFalseForNonModulePhar()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $loader->registerPath(__DIR__ . '/_files/');
         $moduleClass = $loader->autoload('PharModuleFake\Module');
         $moduleClass = $loader->autoload('PharModuleNestedFake\Module');
@@ -186,14 +193,14 @@ class ModuleAutoloaderTest extends TestCase
 
     public function testInvalidPathThrowsException()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $this->expectException(InvalidArgumentException::class);
         $loader->registerPath(123);
     }
 
     public function testInvalidPathsThrowsException()
     {
-        $loader = new ModuleAutoloader;
+        $loader = new ModuleAutoloader();
         $this->expectException(InvalidArgumentException::class);
         $loader->registerPaths(123);
     }
@@ -202,7 +209,7 @@ class ModuleAutoloaderTest extends TestCase
     {
         $loader = new ModuleAutoloader([
             'My\NonmatchingModule' => __DIR__ . '/_files/NonmatchingModule',
-            'PharModuleExplicit' => __DIR__ . '/_files/PharModuleExplicit.phar',
+            'PharModuleExplicit'   => __DIR__ . '/_files/PharModuleExplicit.phar',
         ]);
         $loader->register();
         $this->assertTrue(class_exists('My\NonmatchingModule\Module'));
@@ -213,7 +220,7 @@ class ModuleAutoloaderTest extends TestCase
     {
         $loader = new ModuleAutoloader();
         $loader->setModuleClassMap([
-            'BarModule\Module' => __DIR__ . '/_files/BarModule/Module.php',
+            'BarModule\Module'     => __DIR__ . '/_files/BarModule/Module.php',
             'PharModuleMap\Module' => __DIR__ . '/_files/PharModuleMap.phar',
         ]);
         $loader->register();
@@ -226,7 +233,7 @@ class ModuleAutoloaderTest extends TestCase
     {
         $loader = new ModuleAutoloader([
             'FooModule\*' => __DIR__ . '/_files/FooModule',
-            'FooModule' => __DIR__ . '/_files/FooModule',
+            'FooModule'   => __DIR__ . '/_files/FooModule',
         ]);
         $loader->register();
         $this->assertTrue(class_exists('FooModule\BarModule\Module'));

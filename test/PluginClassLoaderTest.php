@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-loader for the canonical source repository
- * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Loader;
 
+use ArrayObject;
 use Laminas\Loader\Exception\InvalidArgumentException;
 use Laminas\Loader\PluginClassLoader;
+use LaminasTest\Loader\TestAsset\ExtendedPluginClassLoader;
+use LaminasTest\Loader\TestAsset\TestPluginMap;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 /**
  * @group      Loader
@@ -24,7 +22,7 @@ class PluginClassLoaderTest extends TestCase
     {
         // Clear any static maps
         PluginClassLoader::addStaticMap(null);
-        TestAsset\ExtendedPluginClassLoader::addStaticMap(null);
+        ExtendedPluginClassLoader::addStaticMap(null);
 
         // Create a loader instance
         $this->loader = new PluginClassLoader();
@@ -38,19 +36,19 @@ class PluginClassLoaderTest extends TestCase
 
     public function testRegisterPluginRegistersShortNameClassNameAssociation()
     {
-        $this->loader->registerPlugin('loader', __CLASS__);
+        $this->loader->registerPlugin('loader', self::class);
         $plugins = $this->loader->getRegisteredPlugins();
         $this->assertArrayHasKey('loader', $plugins);
-        $this->assertEquals(__CLASS__, $plugins['loader']);
+        $this->assertEquals(self::class, $plugins['loader']);
     }
 
     public function testCallingRegisterPluginWithAnExistingPluginNameOverwritesThatMapAssociation()
     {
         $this->testRegisterPluginRegistersShortNameClassNameAssociation();
-        $this->loader->registerPlugin('loader', 'Laminas\Loader\PluginClassLoader');
+        $this->loader->registerPlugin('loader', PluginClassLoader::class);
         $plugins = $this->loader->getRegisteredPlugins();
         $this->assertArrayHasKey('loader', $plugins);
-        $this->assertEquals('Laminas\Loader\PluginClassLoader', $plugins['loader']);
+        $this->assertEquals(PluginClassLoader::class, $plugins['loader']);
     }
 
     public function testCallingRegisterPluginsWithInvalidStringMapRaisesException()
@@ -67,13 +65,14 @@ class PluginClassLoaderTest extends TestCase
 
     public function testCallingRegisterPluginsWithValidStringMapResolvingToTraversableClassRegistersPlugins()
     {
-        $this->loader->registerPlugins('LaminasTest\Loader\TestAsset\TestPluginMap');
-        $pluginMap = new TestAsset\TestPluginMap;
+        $this->loader->registerPlugins(TestPluginMap::class);
+        $pluginMap = new TestPluginMap();
         $this->assertEquals($pluginMap->map, $this->loader->getRegisteredPlugins());
     }
 
     /**
      * @dataProvider invalidMaps
+     * @param mixed $arg
      */
     public function testCallingRegisterPluginsWithNonArrayNonStringNonTraversableValueRaisesException($arg)
     {
@@ -81,20 +80,21 @@ class PluginClassLoaderTest extends TestCase
         $this->loader->registerPlugins($arg);
     }
 
-    public function invalidMaps()
+    /** @psalm-return array<array-key, array{0: mixed}> */
+    public function invalidMaps(): array
     {
         return [
             [null],
             [true],
             [1],
             [1.0],
-            [new \stdClass],
+            [new stdClass()],
         ];
     }
 
     public function testCallingRegisterPluginsWithArrayRegistersMap()
     {
-        $map = ['test' => __CLASS__];
+        $map = ['test' => self::class];
         $this->loader->registerPlugins($map);
         $test = $this->loader->getRegisteredPlugins();
         $this->assertEquals($map, $test);
@@ -102,7 +102,7 @@ class PluginClassLoaderTest extends TestCase
 
     public function testCallingRegisterPluginsWithTraversableObjectRegistersMap()
     {
-        $map = new TestAsset\TestPluginMap();
+        $map = new TestPluginMap();
         $this->loader->registerPlugins($map);
         $test = $this->loader->getRegisteredPlugins();
         $this->assertEquals($map->map, $test);
@@ -110,7 +110,7 @@ class PluginClassLoaderTest extends TestCase
 
     public function testUnregisterPluginRemovesPluginFromMap()
     {
-        $map = new TestAsset\TestPluginMap();
+        $map = new TestPluginMap();
         $this->loader->registerPlugins($map);
 
         $this->loader->unregisterPlugin('test');
@@ -126,7 +126,7 @@ class PluginClassLoaderTest extends TestCase
 
     public function testIsLoadedReturnsTrueIfPluginIsInMap()
     {
-        $this->loader->registerPlugin('test', __CLASS__);
+        $this->loader->registerPlugin('test', self::class);
         $this->assertTrue($this->loader->isLoaded('test'));
     }
 
@@ -137,8 +137,8 @@ class PluginClassLoaderTest extends TestCase
 
     public function testGetClassNameReturnsClassNameIfPluginIsInMap()
     {
-        $this->loader->registerPlugin('test', __CLASS__);
-        $this->assertEquals(__CLASS__, $this->loader->getClassName('test'));
+        $this->loader->registerPlugin('test', self::class);
+        $this->assertEquals(self::class, $this->loader->getClassName('test'));
     }
 
     public function testLoadReturnsFalseIfPluginIsNotInMap()
@@ -148,13 +148,13 @@ class PluginClassLoaderTest extends TestCase
 
     public function testLoadReturnsClassNameIfPluginIsInMap()
     {
-        $this->loader->registerPlugin('test', __CLASS__);
-        $this->assertEquals(__CLASS__, $this->loader->load('test'));
+        $this->loader->registerPlugin('test', self::class);
+        $this->assertEquals(self::class, $this->loader->load('test'));
     }
 
     public function testIteratingLoaderIteratesPluginMap()
     {
-        $map = new TestAsset\TestPluginMap();
+        $map = new TestPluginMap();
         $this->loader->registerPlugins($map);
         $test = [];
         foreach ($this->loader as $name => $class) {
@@ -167,7 +167,7 @@ class PluginClassLoaderTest extends TestCase
     public function testPluginRegistrationIsCaseInsensitive()
     {
         $map = [
-            'foo' => __CLASS__,
+            'foo' => self::class,
             'FOO' => __NAMESPACE__ . '\TestAsset\TestPluginMap',
         ];
         $this->loader->registerPlugins($map);
@@ -177,7 +177,7 @@ class PluginClassLoaderTest extends TestCase
     public function testAddingStaticMapDoesNotAffectExistingInstances()
     {
         PluginClassLoader::addStaticMap([
-            'test' => __CLASS__,
+            'test' => self::class,
         ]);
         $this->assertFalse($this->loader->getClassName('test'));
     }
@@ -185,10 +185,10 @@ class PluginClassLoaderTest extends TestCase
     public function testAllowsSettingStaticMapForSeedingInstance()
     {
         PluginClassLoader::addStaticMap([
-            'test' => __CLASS__,
+            'test' => self::class,
         ]);
         $loader = new PluginClassLoader();
-        $this->assertEquals(__CLASS__, $loader->getClassName('test'));
+        $this->assertEquals(self::class, $loader->getClassName('test'));
     }
 
     public function testPassingNullToStaticMapClearsMap()
@@ -201,64 +201,64 @@ class PluginClassLoaderTest extends TestCase
 
     public function testAllowsPassingTraversableObjectToStaticMap()
     {
-        $map = new \ArrayObject([
-            'test' => __CLASS__,
+        $map = new ArrayObject([
+            'test' => self::class,
         ]);
         PluginClassLoader::addStaticMap($map);
         $loader = new PluginClassLoader();
-        $this->assertEquals(__CLASS__, $loader->getClassName('test'));
+        $this->assertEquals(self::class, $loader->getClassName('test'));
     }
 
     public function testMultipleCallsToAddStaticMapMergeMap()
     {
         PluginClassLoader::addStaticMap([
-            'test' => __CLASS__,
+            'test' => self::class,
         ]);
         PluginClassLoader::addStaticMap([
-            'loader' => 'Laminas\Loader\PluginClassLoader',
+            'loader' => PluginClassLoader::class,
         ]);
         $loader = new PluginClassLoader();
-        $this->assertEquals(__CLASS__, $loader->getClassName('test'));
-        $this->assertEquals('Laminas\Loader\PluginClassLoader', $loader->getClassName('loader'));
+        $this->assertEquals(self::class, $loader->getClassName('test'));
+        $this->assertEquals(PluginClassLoader::class, $loader->getClassName('loader'));
     }
 
     public function testStaticMapUsesLateStaticBinding()
     {
-        TestAsset\ExtendedPluginClassLoader::addStaticMap(['test' => __CLASS__]);
+        ExtendedPluginClassLoader::addStaticMap(['test' => self::class]);
         $loader = new PluginClassLoader();
         $this->assertFalse($loader->getClassName('test'));
-        $loader = new TestAsset\ExtendedPluginClassLoader();
-        $this->assertEquals(__CLASS__, $loader->getClassName('test'));
+        $loader = new ExtendedPluginClassLoader();
+        $this->assertEquals(self::class, $loader->getClassName('test'));
     }
 
     public function testMapPrecedenceIsExplicitTrumpsConstructorTrumpsStaticTrumpsInternal()
     {
-        $loader = new TestAsset\ExtendedPluginClassLoader();
-        $this->assertEquals('Laminas\Loader\PluginClassLoader', $loader->getClassName('loader'));
+        $loader = new ExtendedPluginClassLoader();
+        $this->assertEquals(PluginClassLoader::class, $loader->getClassName('loader'));
 
-        TestAsset\ExtendedPluginClassLoader::addStaticMap(['loader' => __CLASS__]);
-        $loader = new TestAsset\ExtendedPluginClassLoader();
-        $this->assertEquals(__CLASS__, $loader->getClassName('loader'));
+        ExtendedPluginClassLoader::addStaticMap(['loader' => self::class]);
+        $loader = new ExtendedPluginClassLoader();
+        $this->assertEquals(self::class, $loader->getClassName('loader'));
 
-        $loader = new TestAsset\ExtendedPluginClassLoader(
-            ['loader' => 'LaminasTest\Loader\TestAsset\ExtendedPluginClassLoader']
+        $loader = new ExtendedPluginClassLoader(
+            ['loader' => ExtendedPluginClassLoader::class]
         );
-        $this->assertEquals('LaminasTest\Loader\TestAsset\ExtendedPluginClassLoader', $loader->getClassName('loader'));
+        $this->assertEquals(ExtendedPluginClassLoader::class, $loader->getClassName('loader'));
 
-        $loader->registerPlugin('loader', __CLASS__);
-        $this->assertEquals(__CLASS__, $loader->getClassName('loader'));
+        $loader->registerPlugin('loader', self::class);
+        $this->assertEquals(self::class, $loader->getClassName('loader'));
     }
 
     public function testRegisterPluginsCanAcceptArrayElementWithClassNameProvidingAMap()
     {
-        $pluginMap = new TestAsset\TestPluginMap;
-        $this->loader->registerPlugins(['LaminasTest\Loader\TestAsset\TestPluginMap']);
+        $pluginMap = new TestPluginMap();
+        $this->loader->registerPlugins([TestPluginMap::class]);
         $this->assertEquals($pluginMap->map, $this->loader->getRegisteredPlugins());
     }
 
     public function testRegisterPluginsCanAcceptArrayElementWithObjectProvidingAMap()
     {
-        $pluginMap = new TestAsset\TestPluginMap;
+        $pluginMap = new TestPluginMap();
         $this->loader->registerPlugins([$pluginMap]);
         $this->assertEquals($pluginMap->map, $this->loader->getRegisteredPlugins());
     }

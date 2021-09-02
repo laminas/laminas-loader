@@ -1,17 +1,27 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-loader for the canonical source repository
- * @copyright https://github.com/laminas/laminas-loader/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-loader/blob/master/LICENSE.md New BSD License
- */
-
 namespace LaminasTest\Loader;
 
+use ArrayObject;
 use Laminas\Loader\Exception\InvalidArgumentException;
 use Laminas\Loader\StandardAutoloader;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use stdClass;
+
+use function array_pop;
+use function class_exists;
+use function count;
+use function dirname;
+use function get_include_path;
+use function is_array;
+use function set_include_path;
+use function spl_autoload_functions;
+use function spl_autoload_register;
+use function spl_autoload_unregister;
+
+use const DIRECTORY_SEPARATOR;
+use const PATH_SEPARATOR;
 
 /**
  * @group      Loader
@@ -69,7 +79,7 @@ class StandardAutoloaderTest extends TestCase
     {
         $loader = new StandardAutoloader();
 
-        $obj  = new \stdClass();
+        $obj = new stdClass();
         foreach ([true, 'foo', $obj] as $arg) {
             try {
                 $loader->setOptions(true);
@@ -83,15 +93,15 @@ class StandardAutoloaderTest extends TestCase
     public function testPassingArrayOptionsPopulatesProperties()
     {
         $options = [
-            'namespaces' => [
-                'Laminas\\'   => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'namespaces'          => [
+                'Laminas\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ],
-            'prefixes'   => [
-                'Laminas_'  => dirname(__DIR__) . DIRECTORY_SEPARATOR,
+            'prefixes'            => [
+                'Laminas_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
             ],
             'fallback_autoloader' => true,
         ];
-        $loader = new TestAsset\StandardAutoloader();
+        $loader  = new TestAsset\StandardAutoloader();
         $loader->setOptions($options);
         $this->assertEquals($options['namespaces'], $loader->getNamespaces());
         $this->assertEquals($options['prefixes'], $loader->getPrefixes());
@@ -100,18 +110,18 @@ class StandardAutoloaderTest extends TestCase
 
     public function testPassingTraversableOptionsPopulatesProperties()
     {
-        $namespaces = new \ArrayObject([
+        $namespaces = new ArrayObject([
             'Laminas\\' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ]);
-        $prefixes = new \ArrayObject([
+        $prefixes   = new ArrayObject([
             'Laminas_' => dirname(__DIR__) . DIRECTORY_SEPARATOR,
         ]);
-        $options = new \ArrayObject([
-            'namespaces' => $namespaces,
-            'prefixes'   => $prefixes,
+        $options    = new ArrayObject([
+            'namespaces'          => $namespaces,
+            'prefixes'            => $prefixes,
             'fallback_autoloader' => true,
         ]);
-        $loader = new TestAsset\StandardAutoloader();
+        $loader     = new TestAsset\StandardAutoloader();
         $loader->setOptions($options);
         $this->assertEquals((array) $options['namespaces'], $loader->getNamespaces());
         $this->assertEquals((array) $options['prefixes'], $loader->getPrefixes());
@@ -176,8 +186,8 @@ class StandardAutoloaderTest extends TestCase
 
     public function testLaminasNamespaceIsNotLoadedByDefault()
     {
-        $loader = new StandardAutoloader();
-        $r = new ReflectionClass($loader);
+        $loader             = new StandardAutoloader();
+        $r                  = new ReflectionClass($loader);
         $namespacesProperty = $r->getProperty('namespaces');
         $namespacesProperty->setAccessible(true);
         $expected = [];
@@ -186,13 +196,13 @@ class StandardAutoloaderTest extends TestCase
 
     public function testCanTellAutoloaderToRegisterLaminasNamespaceAtInstantiation()
     {
-        $loader = new StandardAutoloader(['autoregister_laminas' => true]);
-        $r = new ReflectionClass($loader);
+        $loader             = new StandardAutoloader(['autoregister_laminas' => true]);
+        $r                  = new ReflectionClass($loader);
         $namespacesProperty = $r->getProperty('namespaces');
         $namespacesProperty->setAccessible(true);
-        $file = $r->getFileName();
+        $file     = $r->getFileName();
         $expected = [
-            'Laminas\\'    => dirname(dirname($file)) . DIRECTORY_SEPARATOR,
+            'Laminas\\' => dirname(dirname($file)) . DIRECTORY_SEPARATOR,
         ];
         $this->assertEquals($expected, $namespacesProperty->getValue($loader));
     }
