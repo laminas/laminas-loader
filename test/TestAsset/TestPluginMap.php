@@ -2,6 +2,8 @@
 
 namespace LaminasTest\Loader\TestAsset;
 
+use ReturnTypeWillChange;
+
 /**
  * @group      Loader
  */
@@ -23,6 +25,7 @@ class TestPluginMap implements \IteratorAggregate
      *
      * @return Traversable
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         return new \ArrayIterator($this->map);
