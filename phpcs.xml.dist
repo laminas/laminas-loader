@@ -29,4 +29,8 @@
         <exclude-pattern>/src/ModuleAutoloader.php</exclude-pattern>
         <exclude-pattern>/src/StandardAutoloader.php</exclude-pattern>
     </rule>
+    <rule ref="SlevomatCodingStandard.TypeHints.DeclareStrictTypes.DeclareStrictTypesMissing">
+        <exclude-pattern>src/</exclude-pattern>
+        <exclude-pattern>test/</exclude-pattern>
+    </rule>
 </ruleset>
