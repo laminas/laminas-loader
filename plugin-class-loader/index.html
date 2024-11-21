@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Autoloading and plugin loading strategies">  
+    <meta name="description" content="Autoloading and plugin loading strategies"> 
+
+    
+    
+    <meta name="docsearch:version" content="latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-loader">
+
     <link rel="canonical" href="https://docs.laminas.dev/laminas-loader/plugin-class-loader/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -72,17 +79,6 @@
                                     <div class="col-md-8 col-sm-12">
                                         <strong>MVC</strong><br>
                                         MVC for Enterprise Applications
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
                                     </div>
                                 </div>
                             </a>
@@ -231,15 +227,15 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/laminas/laminas-loader/" class="header__link header__link--github" title="Go to repository of laminas-loader">
-                        <i class="fa fa-github"></i> GitHub
+                    <a href="https://github.com/laminas/laminas-loader" class="header__link header__link--github" title="Go to repository of laminas-loader">
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 
             </div>
@@ -353,9 +349,8 @@ $loader-&gt;registerPlugin('xForwardedFor', 'My\Http\Header\XForwardedFor');
 
 // Load/retrieve the associated plugin class:
 $class = $loader-&gt;load('xrequestedfor'); // 'My\Http\Header\XRequestedFor'</code></pre>
-
 <blockquote>
-<h3>Case Sensitivity</h3>
+<h3 id="case-sensitivity">Case Sensitivity</h3>
 <p>The <code>PluginClassLoader</code> is designed to do case-insensitive plugin name
 lookups. While the above example defines an "xForwardedFor" plugin name,
 internally, this will be stored as "xforwardedfor". If another plugin is
@@ -366,16 +361,14 @@ overwrite this entry.</p>
 <p>The constructor may take a single option, an array or <code>Traversable</code> object of key/value pairs
 corresponding to a plugin name and class name, respectively.</p>
 <h2 id="available-methods">Available Methods</h2>
-<h3>__construct</h3>
+<h3 id="__construct">__construct</h3>
 <pre class="highlight"><code class="language-php">__construct(string|array|Traversable $map = null) : void</code></pre>
-
 <p>The constructor is used to instantiate and initialize the plugin class loader.
 If passed a string, an array, or a <code>Traversable</code> object, it will pass this to
 the <a href="#registerplugins">registerPlugins()</a> method in order to seed (or overwrite)
 the plugin class map.</p>
-<h3>addStaticMap</h3>
+<h3 id="addstaticmap">addStaticMap</h3>
 <pre class="highlight"><code class="language-php">static addStaticMap(array|Traversable $map) : void</code></pre>
-
 <p>Static method for globally pre-seeding the loader with a class map. It accepts
 either an array or <code>Traversable</code> object of plugin name/class name pairs.</p>
 <p>When using this method, be certain you understand the precedence in which maps
@@ -390,15 +383,13 @@ will be merged; in decreasing order of preference:</p>
 </ul>
 <p>Also, please note that calling the method will <strong>not</strong> affect any instances
 already created.</p>
-<h3>registerPlugin</h3>
+<h3 id="registerplugin">registerPlugin</h3>
 <pre class="highlight"><code class="language-php">registerPlugin(string $shortName, string $className) : void</code></pre>
-
 <p>Defined by the <a href="../plugin-class-locator/">PluginClassLocator</a> interface. Expects
 two string arguments, the plugin <code>$shortName</code>, and the class <code>$className</code> which
 it represents.</p>
-<h3>registerPlugins</h3>
+<h3 id="registerplugins">registerPlugins</h3>
 <pre class="highlight"><code class="language-php">registerPlugins(string|array|Traversable $map) : void</code></pre>
-
 <p>If a string argument is provided, <code>registerPlugins()</code> assumes this is a class
 name. If the class does not exist, an exception will be thrown. If it does, it
 then instantiates the class and checks to see whether or not it implements
@@ -406,40 +397,34 @@ then instantiates the class and checks to see whether or not it implements
 <p>Each key/value pair obtained during iteration is then passed to
 <a href="#registerPlugin">registerPlugin()</a> using the key as the plugin name and the
 value as the class name.</p>
-<h3>unregisterPlugin</h3>
+<h3 id="unregisterplugin">unregisterPlugin</h3>
 <pre class="highlight"><code class="language-php">unregisterPlugin(string $shortName) : void</code></pre>
-
 <p>Defined by the <code>PluginClassLocator</code> interface; remove a plugin/class association
 from the plugin class map.</p>
-<h3>getRegisteredPlugins</h3>
+<h3 id="getregisteredplugins">getRegisteredPlugins</h3>
 <pre class="highlight"><code class="language-php">getRegisteredPlugins() : array</code></pre>
-
 <p>Defined by the <code>PluginClassLocator</code> interface; return the entire plugin class
 map as an array.</p>
-<h3>isLoaded</h3>
+<h3 id="isloaded">isLoaded</h3>
 <pre class="highlight"><code class="language-php">isLoaded(string $name) : bool</code></pre>
-
 <p>Defined by the <code>ShortNameLocator</code> interface; determine if the given plugin has
 been resolved to a class name.</p>
-<h3>getClassName</h3>
+<h3 id="getclassname">getClassName</h3>
 <pre class="highlight"><code class="language-php">getClassName(string $name) : string</code></pre>
-
 <p>Defined by the <code>ShortNameLocator</code> interface; return the class name to which a
 plugin name resolves.</p>
-<h3>load</h3>
+<h3 id="load">load</h3>
 <pre class="highlight"><code class="language-php">load(string $name) : string|false</code></pre>
-
 <p>Defined by the <code>ShortNameLocator</code> interface; attempt to resolve a plugin name to
 a class name. If successful, returns the class name; otherwise, returns a
 boolean <code>false</code>.</p>
-<h3>getIterator</h3>
+<h3 id="getiterator">getIterator</h3>
 <pre class="highlight"><code class="language-php">getIterator() : Traversable</code></pre>
-
 <p>Defined by the <code>IteratorAggregate</code> interface; allows iteration over the plugin
 class map. This can come in useful for using <code>PluginClassLoader</code> instances to
 other <code>PluginClassLoader</code> instances in order to merge maps.</p>
 <h2 id="examples">Examples</h2>
-<h3>Using Static Maps</h3>
+<h3 id="using-static-maps">Using Static Maps</h3>
 <p>It's often convenient to provide global overrides or additions to the maps in a
 <code>PluginClassLoader</code> instance. This can be done using the <code>addStaticMap()</code>
 method:</p>
@@ -448,15 +433,13 @@ method:</p>
 PluginClassLoader::addStaticMap([
     'xrequestedfor' =&gt; 'My\Http\Header\XRequestedFor',
 ]);</code></pre>
-
 <p>Any later instances created will now have this map defined, allowing you to load
 that plugin.</p>
 <pre class="highlight"><code class="language-php">use Laminas\Loader\PluginClassLoader;
 
 $loader = new PluginClassLoader();
 $class = $loader-&gt;load('xrequestedfor'); // My\Http\Header\XRequestedFor</code></pre>
-
-<h3>Creating a pre-loaded map</h3>
+<h3 id="creating-a-pre-loaded-map">Creating a pre-loaded map</h3>
 <p>In many cases, you know exactly which plugins you may be drawing upon on a
 regular basis, and which classes they will refer to. In this case, extend
 the <code>PluginClassLoader</code> and define the map within the extending class.</p>
@@ -475,11 +458,9 @@ class PluginLoader extends PluginClassLoader
         'foobar' =&gt; 'My\Plugins\FooBar',
     ];
 }</code></pre>
-
 <p>At this point, you can instantiate the map and immediately use it.</p>
 <pre class="highlight"><code class="language-php">$loader = new My\Plugins\PluginLoader();
 $class  = $loader-&gt;load('foobar'); // My\Plugins\FooBar</code></pre>
-
 <p><code>PluginClassLoader</code> makes use of late static binding, allowing per-class static
 maps. If you want to allow defining a <a href="#using-static-maps">static map</a> specific
 to this extending class, declare a protected static <code>$staticMap</code> property:</p>
@@ -493,13 +474,11 @@ class PluginLoader extends PluginClassLoader
 
     // ...
 }</code></pre>
-
 <p>To inject the static map, call the <code>addStaticMap()</code> on the extension class:</p>
 <pre class="highlight"><code class="language-php">PluginLoader::addStaticMap([
     'baz' =&gt; 'My\Plugins\Baz',
 ]);</code></pre>
-
-<h3>Extending a plugin map using another plugin map</h3>
+<h3 id="extending-a-plugin-map-using-another-plugin-map">Extending a plugin map using another plugin map</h3>
 <p>In some cases, a general map class may already exist; as an example, several
 Laminas components defining plugin brokers have an associated
 <code>PluginClassLoader</code> extension defining the plugins available for that component
@@ -545,7 +524,9 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
         <li class="page-nav__item">
             
                 <a rel="prev" class="page-nav__link page-nav__link--prev" href="../spl-autoloader/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    SplAutoloader
                 </a>
             
         </li>
@@ -554,7 +535,9 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="../short-name-locator/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    ShortNameLocator
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -562,16 +545,6 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-loader/edit/master/docs/book/plugin-class-loader.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
@@ -677,6 +650,7 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -700,7 +674,7 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>
@@ -717,13 +691,13 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
                                 <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
                             </li>
                             <li class="support__list-item">
                                 <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
@@ -739,7 +713,7 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-loader/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -749,7 +723,7 @@ $loader-&gt;registerPlugins(new PluginLoader());  // as instance</code></pre>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>

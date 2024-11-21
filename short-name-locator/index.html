@@ -5,7 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Autoloading and plugin loading strategies">  
+    <meta name="description" content="Autoloading and plugin loading strategies"> 
+
+    
+    
+    <meta name="docsearch:version" content="latest">
+    <meta name="docsearch:language" content="en">
+    <meta name="docsearch:component" content="laminas-loader">
+
     <link rel="canonical" href="https://docs.laminas.dev/laminas-loader/short-name-locator/">
     <link rel="shortcut icon" href="https://docs.laminas.dev/img/trademark-laminas-foundation-rgb.svg">
 
@@ -72,17 +79,6 @@
                                     <div class="col-md-8 col-sm-12">
                                         <strong>MVC</strong><br>
                                         MVC for Enterprise Applications
-                                    </div>
-                                </div>
-                            </a>
-                            <a href="https://api-tools.getlaminas.org/documentation" class="dropdown-item">
-                                <div class="row align-items-center">
-                                    <div class="col-md-4 col-sm-12">
-                                        <img src="https://docs.laminas.dev/img/laminas-api-tools-rgb.svg">
-                                    </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <strong>API Tools</strong><br>
-                                        Build RESTful APIs in Minutes
                                     </div>
                                 </div>
                             </a>
@@ -231,15 +227,15 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
                     <a href="#" class="header__link header__link--search" data-toggle="modal" data-target="#mkdocs_search_modal" title="Open search">
                         <i class="fa fa-search"></i> Search
                     </a>
-                    <a href="https://github.com/laminas/laminas-loader/" class="header__link header__link--github" title="Go to repository of laminas-loader">
-                        <i class="fa fa-github"></i> GitHub
+                    <a href="https://github.com/laminas/laminas-loader" class="header__link header__link--github" title="Go to repository of laminas-loader">
+                        <i class="fab fa-github"></i> GitHub
                     </a>
                 
             </div>
@@ -342,22 +338,18 @@ interface ShortNameLocator
     public function getClassName($name);
     public function load($name);
 }</code></pre>
-
 <h2 id="configuration-options">Configuration Options</h2>
 <p>This component defines no configuration options, as it is an interface.</p>
 <h2 id="available-methods">Available Methods</h2>
-<h3>isLoaded</h3>
+<h3 id="isloaded">isLoaded</h3>
 <pre class="highlight"><code class="language-php">isLoaded(string $name) : bool</code></pre>
-
 <p>Implement this method to return a boolean indicating whether or not the class
 has been able to resolve the plugin name to a class.</p>
-<h3>getClassName</h3>
+<h3 id="getclassname">getClassName</h3>
 <pre class="highlight"><code class="language-php">getClassName(string $name) : string</code></pre>
-
 <p>Implement this method to return the class name associated with a plugin name.</p>
-<h3>load</h3>
+<h3 id="load">load</h3>
 <pre class="highlight"><code class="language-php">load($name) : string|false</code></pre>
-
 <p>This method should resolve a plugin name to a class name.</p>
 
 
@@ -370,7 +362,9 @@ has been able to resolve the plugin name to a class.</p>
         <li class="page-nav__item">
             
                 <a rel="prev" class="page-nav__link page-nav__link--prev" href="../plugin-class-loader/">
-                    <i class="fa fa-chevron-left"></i> Previous
+                    <small class="page-nav__label">Previous</small>
+                    <i class="fa fa-chevron-left"></i>
+                    PluginClassLoader
                 </a>
             
         </li>
@@ -379,7 +373,9 @@ has been able to resolve the plugin name to a class.</p>
         <li class="page-nav__item">
             
                 <a rel="next" class="page-nav__link page-nav__link--next" href="../plugin-class-locator/">
-                    Next <i class="fa fa-chevron-right"></i>
+                    <small class="page-nav__label">Next</small>
+                    PluginClassLocator
+                    <i class="fa fa-chevron-right"></i>
                 </a>
             
         </li>
@@ -387,16 +383,6 @@ has been able to resolve the plugin name to a class.</p>
 </nav>
 
 
-
-
-    <div class="help-wanted">
-        <p>
-            Found a mistake or want to contribute to the documentation?
-            <a href="https://github.com/laminas/laminas-loader/edit/master/docs/book/short-name-locator.md" target="_blank" class="help-wanted__link">
-                Edit this page on GitHub!
-            </a>
-        </p>
-    </div>
 
                 
             </div>
@@ -502,6 +488,7 @@ has been able to resolve the plugin name to a class.</p>
         </ul>
     </div>
 
+                    
                 
             </div>
         </div>
@@ -525,7 +512,7 @@ has been able to resolve the plugin name to a class.</p>
                     <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
                     <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
                     <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
-                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Maintenance Overview <a href="https://getlaminas.org/packages-maintenance-status/">Current maintenance status of Laminas &amp; Mezzio packages</a></li>
                 </ul>
             </div>
         </div>
@@ -542,13 +529,13 @@ has been able to resolve the plugin name to a class.</p>
                                 <a href="https://discourse.laminas.dev" class="support__link" title="Forum"><i class="fa fa-comments"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fa fa-slack"></i></a>
+                                <a href="https://laminas.dev/chat" class="support__link" title="Chat"><i class="fab fa-slack"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fa fa-github"></i></a>
+                                <a href="https://github.com/laminas" class="support__link" title="Github"><i class="fab fa-github"></i></a>
                             </li>
                             <li class="support__list-item">
-                                <a href="https://twitter.com/getlaminas" class="support__link" title="Twitter"><i class="fa fa-twitter"></i></a>
+                                <a href="https://phpc.social/@getlaminas" class="support__link" title="Mastodon"><i class="fab fa-mastodon"></i></a>
                             </li>
                             <li class="support__list-item">
                                 <a href="https://getlaminas.org/blog/rss.xml" class="support__link" title="Blog feed"><i class="fa fa-rss"></i></a>
@@ -564,7 +551,7 @@ has been able to resolve the plugin name to a class.</p>
                         <h4 class="footer__headline">License</h4>
                         <p>
                             Code licensed under <a
-                                href="https://github.com/laminas/laminas-loader/blob/master/LICENSE.md">BSD 3-Clause</a>.
+                                href="https://github.com/laminas/laminas-loader/blob/-/LICENSE.md">BSD 3-Clause</a>.
                         </p>
                     </div>
 
@@ -574,7 +561,7 @@ has been able to resolve the plugin name to a class.</p>
                         <p>
                             <!--Built with love by the Laminas team with the help of our
                             <a href="https://github.com/laminas/laminas-loader/graphs/contributors">contributors</a>.<br>-->
-                            &copy; 2020 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
+                            &copy; 2024 <a href="https://getlaminas.org/">Laminas Project</a> a Series of LF Projects, LLC.
                         </p>
                     </div>
                 </div>
