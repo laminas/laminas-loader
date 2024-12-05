@@ -12,7 +12,7 @@ nav:
         - ShortNameLocator: short-name-locator.md
         - PluginClassLocator: plugin-class-locator.md
         - "ClassMap Generator": classmap-generator.md
-site_name: laminas-loader
+site_name: laminas-loader (Abandoned)
 site_description: 'Autoloading and plugin loading strategies'
 repo_url: 'https://github.com/laminas/laminas-loader'
 extra:
