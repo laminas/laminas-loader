@@ -2,42 +2,42 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/autoloader-factory/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/class-map-autoloader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/classmap-generator/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/module-autoloader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/plugin-class-loader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/plugin-class-locator/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/short-name-locator/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/spl-autoloader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-loader/standard-autoloader/</loc>
-         <lastmod>2024-11-21</lastmod>
+         <lastmod>2024-12-05</lastmod>
     </url>
 </urlset>
